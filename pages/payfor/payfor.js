@@ -78,7 +78,6 @@ Page({
                                 })
                             }
                             for (var i = 0; i < length; i++) {
-                                console.log(res.data.data[i])
                                 if (time[i].pay_type == 0 && time[i].charge_money != 0) {
                                     time[i].pay_type = "未支付"
                                     time[i].parkstart_time = http.formatDatenew(time[i].parkstart_time)
@@ -120,6 +119,7 @@ Page({
                     },
                     method: 'GET',
                     success: function (res) {
+                        console.log(res)
                         let mymoney = res.data.data
                         if (mymoney >= that.data.parkingList.charge_money) {
                             console.log(that.data.parkingList.order_no)

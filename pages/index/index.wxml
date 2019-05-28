@@ -9,7 +9,7 @@
                         <cover-image class="center_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="moveToLocation" src="../../img/center_ico.png"></cover-image>
                         <cover-image class="help_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="helpTocenter" src="../../img/help_ico.png"></cover-image>
                         <cover-image class="personal_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="personalTocenter" src="../../img/personal_ico.png"></cover-image>
-                        <cover-view class="parking-btn {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="stopCar" animation="{{animationData1}}">我要停车  
+                        <cover-view class="parking-btn {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="stopCar" animation="{{animationData1}}">我要停车/缴费  
                         </cover-view>                            
                 </map>
                     <view class="{{parkShow?'show':'hidden'}} user_box">

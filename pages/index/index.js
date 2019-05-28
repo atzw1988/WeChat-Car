@@ -72,27 +72,9 @@ Page({
         var that = this;
         wx.showShareMenu({
             withShareTicket: true
-        });        
-        //开车停车按钮动画
-        // const animation = wx.createAnimation({
-        //     duration: 1000,
-        //     timingFunction: 'ease',
-        // })
-        // this.animation = animation
-        // let next = true;
-        // setInterval(function () {
-        //     if (next) {
-        //         this.animation.scale(1.1).step()
-        //         next = !next;
-        //     } else {
-        //         this.animation.scale(1).step()
-        //         next = !next;
-        //     }
-        //     this.setData({
-        //         animationData1: animation.export()
-        //     })
-        // }.bind(this), 1000)
+        }); 
         var that = this;
+        //查询用户是否有欠款
         wx.getStorage({
             key: 'userID',
             success(res) {
@@ -128,6 +110,35 @@ Page({
                                 })
                             }
                         }                        
+                    }
+                })
+                //查询用户是否绑定车牌
+                wx.request({
+                    url: http.reqUrl + '/query/carNo',
+                    data: {
+                        userId: res.data
+                    },
+                    header: {
+                        'content-type': 'application/x-www-form-urlencoded' // 默认值
+                    },
+                    method: 'GET',
+                    success: function (res) {
+                        console.log(res.data.data)
+                        if(!res.data.data){
+                            wx.showModal({
+                                title: '温馨提示',
+                                content: '您尚未绑定车牌，请先绑定车牌！',
+                                success(res) {
+                                    if (res.confirm) {
+                                        wx.navigateTo({
+                                            url: '../plate1/plate1',
+                                        })
+                                    } else if (res.cancel) {
+                                        return;
+                                    }
+                                }
+                            })
+                        }
                     }
                 })
             }
