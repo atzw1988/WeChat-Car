@@ -503,12 +503,12 @@ Page({
     },
     //跳转附近停车场界面
     allpark: function(){
-        // wx.navigateTo({
-        //     url: '../allpark/allpark'
-        // })
         wx.navigateTo({
-            url: '../cardpay/cardpay',
+            url: '../allpark/allpark'
         })
+        // wx.navigateTo({
+        //     url: '../cardpay/cardpay',
+        // })
     },
     longConversion: function (long) {
         if (long > 1000) {

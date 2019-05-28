@@ -56,8 +56,11 @@ Page({
                     },
                     method: 'POST',
                     success: function (res) {
-                        // console.log(res)
+                        console.log(res.data.data)
                         let bill = res.data.data
+                        bill.forEach(item => {
+                            item.jin_e = (item.jin_e / 100).toFixed(2)
+                        })
                         for(var i=0;i<bill.length;i++){
                             bill[i].pay_date = http.formatDatenew((bill[i].pay_date-0))
                         }
