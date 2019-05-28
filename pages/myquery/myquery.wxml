@@ -1,0 +1,37 @@
+<scroll-view scroll-y="true" class="table" hidden="{{!imgParking}}">
+  <view class="tr bg-w">
+    <view class="th">充值时间</view>
+    <view class="th">金额</view>
+    <!-- <view class="th">充值方式</view> -->
+    <view class="th">状态</view>
+    <view class="th1">订单号</view>
+  </view>
+  <block wx:for="{{queryList}}" wx:key="{{code}}">
+    <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+      <view class="td">{{item.pay_date}}</view>
+      <view class="td">{{item.jin_e}}元</view>
+      <!-- <view class="td" wx:if="{{item.pay_type==0}}">支付宝</view>
+      <view class="td" wx:if="{{item.pay_type==1}}">微信</view> -->
+      <view class="td" wx:if="{{item.state==1}}">已到账</view>
+      <view class="td" wx:if="{{item.state==0}}">未到账</view>
+      <view class="td1">{{item.pay_id}}</view>
+    </view>
+    <view class="tr" wx:else>
+      <view class="td">{{item.pay_date}}</view>
+      <view class="td">{{item.jin_e}}元</view>
+      <!-- <view class="td" wx:if="{{item.pay_type==0}}">支付宝</view>
+      <view class="td" wx:if="{{item.pay_type==1}}">微信</view> -->
+      <view class="td" wx:if="{{item.state==1}}">已到账</view>
+      <view class="td" wx:if="{{item.state==0}}">未到账</view>
+      <view class="td1">{{item.pay_id}}</view>
+    </view>
+  </block>
+  <text>\n</text>
+  <text>\n</text>
+  <text>\n</text>
+</scroll-view>
+<view class='img-box' hidden="{{imgParking}}">
+    <image src='../../img/Recharge-record_icon@2x.png'></image>
+    <text>暂无充值记录哦~</text>
+    <button class='goquery' bindtap='goquery'>去充值</button>
+</view>

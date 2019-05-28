@@ -1,0 +1,98 @@
+.allpark{
+    width: 100%;
+    height: 100%;
+}
+#map{
+  width: 100%;
+  height: 40%;
+}
+.distance{
+    width: 100%;
+    height: 42px;
+    border: 1px solid rgb(202, 202, 202);
+    background-color: #fff;
+}
+
+
+.detail{
+    width: 100%;
+    height: 60%;
+    /* background: rgb(233, 232, 232); */
+}
+.parking-list-container{
+    width: 95%;
+    height: 60px;
+    background-color: #fff;
+    border: 1px solid #fff;
+    margin: 5px auto 0;
+    border-radius: 5px;
+    position: relative;
+}
+.arrow-right{
+    /* float: right; */
+    position: absolute;
+    width: 11px;
+    height: 17px;
+    /* margin-top: -22px; */
+    right: 10px;
+    top: 22px;
+}
+.parking-name{
+    font-size: 18px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+.u-1of2,.plain-text{
+    font-size: 14px;
+    color: rgb(73, 73, 73);
+    margin-top: 5px;
+    margin-left: 10px;
+}
+.parking-distance,.left-number{
+    color: rgb(0, 127, 247);
+}
+.itemBox{
+  flex-flow: wrap;
+  margin:0 auto;
+}
+.itemBox view{
+    width: 20%;
+    height: 30px;
+    border-radius: 15px;
+    display: inline-block;
+    /* float: left; */
+    margin-left: 4%;
+    margin-top: 5px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid rgb(0, 127, 247);
+}
+.itemBox view>div{
+  width: 100%;
+  height: 100%;
+  margin:5px;
+}
+.itemBox view.active{
+  background: linear-gradient(to right, #5cbcfe , #9cd7ff);
+  border: 1px solid #5cbcfe;
+  color: #fff;
+  box-shadow: 2px 2px 2px #91d3ff;
+}
+.nopark{
+  width: 100%;
+  height: 60%;
+}
+.nopark>image{
+  width: 80px;
+  height: 80px;
+  display: block;
+  margin: 20% auto 0;
+}
+.nopark .text{
+  width: 240px;
+  height: 20px;
+  /* border: 1px solid salmon; */
+  margin: 10px auto 0;
+  line-height: 20px;
+  text-align: center;
+}

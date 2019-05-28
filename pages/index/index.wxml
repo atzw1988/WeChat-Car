@@ -1,0 +1,80 @@
+<view class=''>
+    <view class="swiper-box" duration="300">
+        <!-- 停车 -->
+        <view class="{{swichNav?'show':'hidden'}}">
+            <view class="map_container">
+                <map id="map" scale="12" longitude="{{longitude}}" latitude="{{latitude}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindtap="click" bindmarkertap="markertap" bindcallouttap="callouttap" show-location style="width: 100%;height:{{winHeight}}px">
+                    
+                        <cover-image class="refresh_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="refreshtap" src="../../img/refresh_ico.png"></cover-image>
+                        <cover-image class="center_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="moveToLocation" src="../../img/center_ico.png"></cover-image>
+                        <cover-image class="help_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="helpTocenter" src="../../img/help_ico.png"></cover-image>
+                        <cover-image class="personal_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="personalTocenter" src="../../img/personal_ico.png"></cover-image>
+                        <cover-view class="parking-btn {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="stopCar" animation="{{animationData1}}">我要停车  
+                        </cover-view>                            
+                </map>
+                    <view class="{{parkShow?'show':'hidden'}} user_box">
+                        <view class="park_box">
+                            <view class='park_list clearfix'>
+                                <view class='park_info'>
+                                    <view class='park_cont'>{{carNumber}}</view>
+                                    <view class='park_title'>车牌号码</view>
+                                </view>
+                                <view class='park_info'>
+                                    <view class='park_cont'>{{parkTime}}分钟</view>
+                                    <view class='park_title'>停车时间</view>
+                                </view>
+                                <view class='park_info'>
+                                    <view class='park_cont'>{{parkNo}}</view>
+                                    <view class='park_title'>车位编号</view>
+                                </view>
+                            </view>
+                            <view class='consu_box'>
+                                <form bindsubmit='stopPark' report-submit='true'>
+                                    <button form-type='submit' type='default' class='duration_btn'>结束停车</button>
+                                </form>                                
+                            </view>
+                        </view>
+                    </view>
+                    <view class="parking-list-container {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}">
+                    <view class='nearpark'>附近<text>{{parknum}}</text>个停车点</view>
+                    <view class='allpark' bindtap='allpark'>查看全部</view>
+                    <view class="parking-list-section center" wx:for="{{searchSongList}}" wx:key="lcokParking" data-data="{{item}}" data-index="{{item.parking_weiyi_no}}" bindtap="bindParkingListItemTap">
+                        <view class="content">
+                            <view class="parking-list-item flex">
+                                <view class="parking-name">{{item.parking_name}}</view>
+                            </view>
+                            <view class="parking-list-item flex">
+                                <view class="u-1of2 plain-text">距您:
+                                    <view class="parking-distance">{{item.distance}}</view>
+                                </view>
+                                <view class="plain-text">可停车位:
+                                    <view class="left-number">{{item.freepark}}</view>
+                                </view>
+                            </view>
+                        </view>
+                        <image class="arrow-right" src="../../img/arrow_icon@2x.png"></image>
+                    </view>
+                </view>
+                <view class="menu-annotation {{parkShow?'hidden':'show'}}" bindtap='moreBtn'>查看更多</view>   
+            </view>
+        </view>
+    </view>
+</view>
+<cover-view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></cover-view>
+<cover-view  class="drawer_box" wx:if="{{showModalStatus}}">
+    <cover-view class="drawer_title">温馨提示</cover-view>
+    <cover-view class="drawer_content">
+    <cover-view class='drawer_text'>请您选择停车场种类</cover-view>   
+    </cover-view>
+    <cover-view class='btn' bindtap='parkone'>泊位停车</cover-view>
+    <cover-view class='btn' bindtap='parktwo'>车库缴费</cover-view>
+</cover-view>
+<cover-view class="drawer_screen" wx:if="{{get_user_phone}}"></cover-view>
+<cover-view  class="drawer_box" wx:if="{{get_user_phone}}">
+    <cover-view class="drawer_title">温馨提示</cover-view>
+    <cover-view class="drawer_content">
+    <cover-view class='drawer_text'>请绑定您的手机号</cover-view>   
+    </cover-view>
+    <cover-view class='btn' bindtap='parkone'>取消</cover-view>
+    <button class='btn' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">同意</button>
+</cover-view>

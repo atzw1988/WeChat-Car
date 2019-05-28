@@ -1,0 +1,109 @@
+.useinfo{
+    width: 100%;
+    height: 150px;
+    position: relative;
+    background-color: #5cbcfe;
+}
+.user_img{
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid #9cd6fd;
+    top: 20px;
+    left: 50%;
+    margin-left: -30px;
+    overflow: hidden;
+}
+.user_name{
+    width: 50px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 14px;
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    margin-left: -25px;
+}
+.userbtn{
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    margin-left: -50px;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+}
+.arrow{
+  position: absolute;
+  top: 52px;
+  right: 28px;
+  width: 11px;
+  height: 17px;
+}
+.on{
+  font-size: 18px;
+  color: #32b51c;
+}
+.balance_box{
+  padding: 40px 20px 26px;
+  border-bottom: 1px rgb(227, 227, 227) solid;
+}
+
+.balance{
+  font-size: 15px;
+  color: #222;
+  margin-bottom: 8px;
+}
+.balance_num{
+  font-size: 24px;
+  color: #222;
+}
+
+.top-up{
+  width: 60px;
+  height: 30px;
+  font-size: 15px;
+  color: #fff;
+  line-height: 30px;
+  text-align: center;
+  background-color: #32b51c;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.coupons_box,.parking_box,.recharge_box,.refunds_box,.inform_box,.payfor_box,.mybill_box{
+  width: 100%;
+  height: 60px;
+  font-size: 16px;
+  color: #222;
+  line-height: 60px;
+  border-bottom: 1px rgb(227, 227, 227) solid;
+}
+.arrow1{
+  width: 11px;
+  height: 17px;
+  float: right;
+  margin: 22px 20px 0 0;
+}
+.arrow2{
+    width: 25px;
+    height: 25px;
+    float: left;
+    margin: 20px 0 0 20px;
+}
+.person-title{
+  margin-left: 20px;
+}
+.info{
+  font-size: 15px;
+  color: #909090;
+  margin-right: 15px;
+}
+.info1{
+  font-size: 15px;
+  color: #f72c2c;
+  margin-right: 15px;
+}

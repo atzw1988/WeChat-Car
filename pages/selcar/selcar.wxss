@@ -1,0 +1,58 @@
+/* pages/selcar/selcar.wxss */
+.header {
+  /* position: relative; */
+  width: 340px;
+  height: 100px;
+  font-size: 12px;
+  color: #222;
+  text-align: center;
+  /* line-height: 140px; */
+  border: 1px solid #fff;
+  border-radius: 10px;
+  margin: 10px auto;
+  background-color: #fff;
+  box-shadow: 2px 2px 2px #f1f1f1;
+}
+.header>text {
+  display: block;
+}
+.addcar {
+  width: 30px;
+  height: 30px;
+  margin: 20px auto 0;
+}
+
+.mycar {
+  width: 340px;
+  height: 100px;
+  background-color: #fff;
+  margin: 10px auto;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px #f1f1f1;
+  padding-top: 20px;
+}
+.carnumber {
+  width: 100%;
+  height: 100px;
+}
+.carmingxi {
+  width: 300px;
+  height: 50px;
+  margin: 10px auto 0;
+  line-height: 50px;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.carkind {
+  font-size: 14px;
+  color: #2d2ddd;
+  margin-left: 20px;
+}
+
+.carkind1 {
+  font-size: 14px;
+  color: #15e063;
+  margin-left: 20px;
+}

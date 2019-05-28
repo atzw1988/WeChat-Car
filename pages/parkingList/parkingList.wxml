@@ -1,0 +1,28 @@
+<view class="search">
+    <view class="search-result">
+        <scroll-view scroll-y="true" bindscrolltolower="searchScrollLower">
+            <view class="parking-list-section center" wx:for="{{searchSongList}}" wx:key="lcokParking" data-data="{{item}}" data-index="{{item.parking_weiyi_no}}" bindtap='lockDetail' id='{{index}}'>
+                <view class="content">
+                    <view class="parking-list-item flex">
+                        <view class="parking-name">{{item.parking_name}}</view>
+                    </view>
+                    <view class="parking-list-item flex">
+                        <view class="u-1of2 plain-text">距您:
+                            <view class="parking-distance">{{item.distance}}</view>
+                        </view>
+                        <view class="plain-text">剩余车位:
+                            <view class="left-number">{{item.freepark}}</view>
+                        </view>
+                    </view>
+                </view>
+                <image class="arrow-right" src="../../img/arrow_icon@2x.png"></image>
+            </view>
+            <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>
+            <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>
+        </scroll-view>
+        <view class='img-box' hidden="{{!imgParking}}">
+            <image src='../../img/Recharge-record_icon@2x.png'></image>
+            <text>暂无停车场哦</text>
+        </view>
+    </view>
+</view>

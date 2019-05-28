@@ -1,0 +1,54 @@
+<!--pages/cardpay/cardpay.wxml-->
+<view class="row">
+  <view class="user">
+    <view class="car">
+      <view class="img">
+        <image class="car_icon" src="../../img/chepailan.png"></image>
+        <text>您的车辆</text>
+      </view>
+      <view class="carno" bindtap='to_sel_car'>{{car_no}}\t>></view>
+    </view>
+    <view class="park_name">
+      <view class="img">
+        <image class="car_icon" src="../../img/tingchechang_1.png"></image>
+        <text>停车场</text>
+      </view>
+      <view class="parkno" bindtap='to_sel_park'>{{park_name}}\t>></view>
+    </view>
+  </view>
+  <view class="header_text">请选择月卡种类</view>
+  <view class="scroll_box">
+    <scroll-view class="scroll-view_x" scroll-x style="width: auto;overflow:hidden;">
+      <view class="item_list" wx:for="{{card_kind}}" wx:key="{{item.id}}">
+        <view class="content  {{item.checked? 'active':''}}" bindtap='sel_card' id="{{index}}">
+          <image wx:if="{{item.checked}}" class="img_sel" src="../../img/guanbi.png"></image>
+          <view class="card_mx">
+            <view class="kind_name">{{item.typeName}}</view>
+          </view>
+          <view class="card_text">
+            <text class="num">{{item.month_num}}个月</text>\t
+            <text class="price">{{item.money/100.0}}元</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <view class="header_text">请选择支付方式</view>
+  <view class="pay_kind">
+    <view class="mymoney" bindtap='use_money'>
+      <image class="money_icon" src="../../img/balance.png"></image>
+      <text>余额支付</text>
+      <view class="check_img {{!pay_checked? 'checked':''}}">
+        <image wx:if="{{!pay_checked}}" src="../../img/payxuanze.png"></image>
+      </view>
+    </view>
+    <view class="wxpay" bindtap='use_wx'>
+      <image class="wx_icon" src="../../img/weixinzhifu.png"></image>
+      <text>微信支付</text>
+      <view class="check_img {{pay_checked? 'checked':''}}">
+        <image wx:if="{{pay_checked}}" src="../../img/payxuanze.png"></image>
+      </view>
+    </view>  
+  </view>
+  <button class="btn" bindtap='gopay'>确认支付</button>
+</view>

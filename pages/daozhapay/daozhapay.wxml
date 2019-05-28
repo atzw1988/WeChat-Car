@@ -1,0 +1,26 @@
+<!--pages/daozhapay/daozhapay.wxml-->
+<view class='line-box'>
+    <view class='line-one'></view>
+    <text class='line-text'>本次停车费用</text>
+    <view class='line-two'></view>
+</view>
+<view>
+    <view class='money'>{{money}}元</view>
+    <view class='park_list clearfix'>
+        <view class='park_info'>
+            <view class='park_cont'>{{carnumber}}</view>
+            <view class='park_title'>停车车牌</view>
+        </view>
+        <view class='park_info'>
+            <view class='park_cont'>{{parkTime1}}分钟</view>
+            <view class='park_title'>停车时长</view>
+        </view>
+        <view class='park_info'>
+            <view class='park_cont'>{{parkNo}}</view>
+            <view class='park_title'>车位编码</view>
+        </view>
+    </view>
+    <view class='money_all'>订单编号:{{order_no}}</view>
+    <view class='share_btn_pay' bindtap='payfor'>微信支付</view>
+    <view class='share_btn' bindtap='returnOut'>返回</view> 
+</view>

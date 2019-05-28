@@ -1,0 +1,40 @@
+<view class='allpark'>
+    <map id="map" scale="12" longitude="{{longitude}}" latitude="{{latitude}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindtap="click" bindmarkertap="markertap" bindcallouttap="callouttap" show-location style="width: 100%;height:40%" covers="{{covers}}">
+    <!-- <cover-view class='search'>
+        <input value='搜索附近停车场'></input>
+    </cover-view> -->
+    </map>
+    <view class='distance'>
+        <view class='flex between itemBox'>
+            <view class="{{activeIndex == index ? 'active':''}}"  wx:for="{{numArray}}" wx:key="{{index}}" bindtap='activethis' data-thisindex='{{index}}'>
+                <div>{{item}}m</div>
+            </view>
+        </view>
+    </view>
+    <view class='detail'>
+        <scroll-view>
+            <block wx:for="{{parkNumber}}" wx:key="{{index}}">
+                <view class='parking-list-container' bindtap='daohang' id='{{index}}'>
+                    <view class="content">
+                        <view class="parking-list-item flex">
+                            <view class="parking-name">{{item.parking_name}}</view>
+                        </view>
+                        <view class="parking-list-item flex">
+                            <view class="u-1of2 plain-text">距您:
+                                <text class="parking-distance">{{item.distance}}m</text>
+                            </view>
+                            <view class="plain-text">可停车位:
+                                <text class="left-number">{{item.freepark}}</text>
+                            </view>
+                        </view>
+                    </view>
+                    <image class="arrow-right" src="../../img/arrow_icon@2x.png"></image>
+                </view>
+            </block>
+        </scroll-view>
+        <view class='nopark' hidden='{{imgParking}}'>
+            <image src='../../img/warning.png'></image>
+            <view class='text'>附近{{neardis}}m内没有停车点</view>
+        </view>
+    </view>
+</view>

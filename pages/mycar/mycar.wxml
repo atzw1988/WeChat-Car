@@ -1,0 +1,27 @@
+<!--pages/mycar/mycar.wxml-->
+<scroll-view>
+    <block wx:for="{{carNumber}}" wx:key="{{index}}">
+        <view class='mycar'>
+            <view class='carnumber'>
+                <view class='carmingxi'>
+                    <text>{{item.car_no}}</text>
+                    <image class='del_img' src='../../img/shanchu.png'></image>
+                    <text class='del_text' bindtap='delmycar' id='{{index}}'>删除</text>
+                </view>
+                <text class='carkind' wx:if="{{item.car_type==0}}">普通车辆</text>
+                <text class='carkind1' wx:if="{{item.car_type==1}}">新能源车辆</text>    
+            </view>
+            <!-- <view class='title'>
+                <text>您可以申请<text class='approve'>车辆认证</text>，以便享受更便捷的停车服务</text>
+            </view> -->
+        </view>
+    </block>
+    <view class='header clearfix' bindtap='addmycar'>
+        <image class='addcar' src='../../img/tianjia.png'></image>
+        <text>添加车辆</text>
+    </view>
+    <text> \n </text>
+    <text> \n </text>
+    <text> \n </text>
+</scroll-view>
+

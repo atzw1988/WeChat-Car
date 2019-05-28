@@ -1,0 +1,45 @@
+<scroll-view class="table" hidden="{{imgParking}}">
+</scroll-view>
+<view hidden="{{imgParking}}">    
+    <view class='line-box'>
+        <view class='line-one'></view>
+        <text class='line-text'>尚未付清的停车</text>
+        <view class='line-two'></view>
+    </view>
+    <view>
+        <view class='money'>{{parkingList.charge_money}}元</view>
+        <view class='park_list clearfix'>
+            <view class='park_info1'>
+                <!-- <view class='park_title'>停车车牌</view>
+                <view class='park_cont'>{{parkingList.car_no}}</view> -->
+                <text class='park_title'>停车车牌</text>
+                <text class='park_cont1'>{{parkingList.car_no}}</text>    
+            </view>
+            <view class='park_info1'>
+                <!-- <view class='park_title'>停车时长</view>
+                <view class='park_cont'>{{parkingList.buy_time}}分钟</view> -->
+                <text class='park_title'>停车时长</text>
+                <text class='park_cont1'>{{parkingList.buy_time}}分钟</text>        
+            </view>
+            <view class='park_info1'>
+                <!-- <view class='park_title'>车位编码</view>
+                <view class='park_cont'>{{parkingList.park_no}}</view> -->
+                <text class='park_title'>车位编码</text>
+                <text class='park_cont1'>{{parkingList.park_no}}</text>             
+            </view>
+            <view class='park_info1'>
+                <text class='park_title'>停车开始时间</text>
+                <text class='park_cont1'>{{parkingList.parkstart_time}}</text>             
+            </view>
+            <view class='park_info1'>
+                <text class='park_title'>停车结束时间</text>
+                <text class='park_cont1'>{{parkingList.parkend_time}}</text>              
+            </view>
+        </view>
+        <button class='gopay' bindtap='gopay'>支付</button>
+    </view>
+</view>
+<view class='img-box' hidden="{{!imgParking}}">
+    <image src='../../img/Recharge-record_icon@2x.png'></image>
+    <text>所有停车费用已经缴清</text>
+</view>

@@ -1,0 +1,25 @@
+<!--pages/mycard/mycard.wxml-->
+<scroll-view>
+  <block wx:for="{{carNumber}}" wx:key="{{index}}">
+    <view class='mycard'>
+      <view class="card_header">
+        <image class="car_icon" src='../../img/chepai.png'></image>
+        <text>粤B88888</text>
+      </view>
+      <view class="card_kind">
+        <text>月卡</text>
+      </view>
+      <text class="park_name">无名路(龙盛路-双塔大桥)</text>
+      <text class="end_time">到期时间:2019-08-08 12:00:00</text>
+      <text class="more_pay">续费>></text>
+      <image class="overdue" src="../../img/yiguoqi.png"></image>
+    </view>
+  </block>
+  <view class='header clearfix' bindtap='addmycar'>
+    <image class='addcar' src='../../img/tianjia.png'></image>
+    <text>办理月卡</text>
+  </view>
+  <text>\n</text>
+  <text>\n</text>
+  <text>\n</text>
+</scroll-view>

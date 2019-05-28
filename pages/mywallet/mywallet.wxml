@@ -1,0 +1,23 @@
+<!--pages/mywallet/mywallet.wxml-->
+<view class='account'>
+    <text class='myaccount'>账户余额</text>
+    <text class='mymoney'>￥<text class='money'>{{moneyAll}}</text></text>
+    <text class='recharge'>充值有优惠，多充多送哦！</text>
+</view>
+<view class='bg-gray'>
+    <view class='main'>
+        <text class='moneynumber'>选择充值金额</text>
+        <view class='flex between itemBox'>
+            <view class="{{activeIndex == index ? 'active':''}}"  wx:for="{{numArray}}" wx:key="{{index}}" bindtap='activethis' data-thisindex='{{index}}'>
+                <div>{{item}}元</div>
+            </view>
+        </view>
+    </view>
+    <view class='record1' bindtap='othermoney'>其他金额</view>
+    <view class='thisbtn' bindtap='subRecharge'>立即充值</view>
+    <view class='record' bindtap='userquery'>查看充值记录</view>
+</view>
+<modal hidden="{{hiddenmodalput}}" title="请输入充值金额 :" confirm-text="充值" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm"> 
+    <input type='number' placeholder="输入您要充值的金额" auto-focus bindinput='mymoney'></input>  
+</modal>
+

@@ -1,0 +1,213 @@
+.pas-box {
+  /* display: block; */
+  /* overflow: hidden; */
+  width: 100%;
+  /* padding-top: 16px; */
+}
+
+.box-six {
+  /* display: block; */
+  height: 42px;
+  /* overflow: hidden; */
+  width: 100%;
+}
+
+.six {
+  height: 42px;
+  margin: 0 auto;
+  /* overflow: hidden; */
+  /* position: relative; */
+  width: 302px;
+  /* width: 100%; */
+}
+
+.i {
+  display: block;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  text-align: center;
+  line-height: 40px;
+  border: 1rpx rgb(34, 34, 34) solid;
+  border-radius: 8px;
+  margin-right: 10px; 
+  float: left;
+}
+.isix{
+  display: block;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  text-align: center;
+  line-height: 40px;
+  border: 1rpx rgb(34, 34, 34) solid;
+  border-radius: 8px;
+  float: left;
+}
+.b {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+}
+.pas-input {
+  border: 0;
+  font-size: 10px;
+  height: 40px;
+  left: -80px;
+  margin: 0;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 110%;
+  z-index: 8;
+  color:transparent;
+}
+
+.line-box{
+  width: 267px;
+  margin: 20px auto;
+  text-align: center
+}
+.line-text{
+  font-size: 12px;
+  color: #909090;
+  /* margin: 0 12px;
+  float: left; */
+}
+.line-one{
+  display: block;
+  width: 88px;
+  border: 1rpx #f8f8f8 solid;
+  float: left;
+  margin-top: 13px;
+}
+.line-two{
+  display: block;
+  width: 88px;
+  border: 1rpx #f8f8f8 solid;
+  float: right;
+  margin-top: 13px;
+}
+.confirm_btn{
+  width: 305px;
+  height: 35px;
+  font-size: 18px;
+  color: #fff;
+  text-align: center;
+  line-height: 35px;
+  background-color: rgb(192, 192, 192);
+  border-radius: 8px;
+  margin: 47px auto 0;
+}
+
+.on{
+  background-color: #5cbcfe;
+}
+.usertext{
+    font-size: 14px;
+    font-weight: 400;
+    margin-left: 15%;
+    margin-top: 50px;
+}
+.usercar{
+    width: 330px;
+    height: 80px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin: 20px auto;
+}
+.carname{
+    margin: 20
+}
+.mycar{
+    width: 85%;
+    height: 100px;
+    background-color: #fff;
+    margin: 10px auto;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px #f1f1f1;
+}
+.carnumber{
+    width: 100%;
+    height: 100%;
+}
+.carmingxi{
+    width: 300px;
+    height: 50px;
+    /* border: 1px solid black; */
+    margin: 10px 10% 0;
+    line-height: 50px;
+    font-size: 18px;
+    font-weight: 700;
+}
+.select_img{
+    width: 30px;
+    height: 30px;
+    float: right;
+    margin-top: 17px;
+}
+.del_text{
+    float: right;
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: -50px;
+}
+.carkind{
+    font-size: 14px;
+    color: #2d2ddd;
+    margin-left: 10%;
+}.carkind1{
+    font-size: 14px;
+    color: #15e063;
+    margin-left: 10%;
+}
+.radio-group{
+    position: relative;
+}
+radio{
+    display: inline-block;
+    position: absolute;
+    right: 12%;
+    /* top: 20px; */
+}
+.saomiao{
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    position: absolute;
+    right: 20px;
+}
+.topadd{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 20px;
+}
+.addtext{
+    position: absolute;
+    left: 50px;
+    font-size: 12px;
+    line-height: 30px;
+}
+.header{
+  /* position: relative; */
+  width: 85%;
+  height: 100px;
+  font-size: 12px;
+  color: #222;
+  text-align: center;
+  /* line-height: 140px; */
+  border: 1px solid #fff;
+  border-radius: 10px;
+  margin: 10px auto;
+  background-color: #fff;
+  box-shadow: 2px 2px 2px #f1f1f1;
+}
+.header>text{
+    display: block;
+}
+.addcar{
+    width: 30px;
+    height: 30px;
+    margin: 20px auto 0;
+}

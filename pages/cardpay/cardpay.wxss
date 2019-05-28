@@ -1,0 +1,154 @@
+/* pages/cardpay/cardpay.wxss */
+.row{
+  width: 100%;
+  height: 100%;
+}
+.user{
+  width: 100%;
+  height: 150rpx;
+  margin-top: 30rpx;
+  background: #fff;
+}
+.car,
+.park_name{
+  height: 75rpx;
+  width: 100%;
+  line-height: 75rpx;
+}
+.img{
+  height: 75rpx;
+  float: left;
+}
+.img>text{
+  float: left;
+  font-size: 30rpx;
+}
+.car_icon{
+  width: 50rpx;
+  height: 50rpx;
+  margin-top: 12.5rpx;
+  margin-left: 10rpx;
+  float: left;
+}
+.carno,
+.parkno{
+  height: 75rpx;
+  float: right;
+  font-size: 30rpx;
+  line-height: 75rpx;
+  margin-right: 20rpx;
+  color: #1296db;
+}
+.header_text{
+  margin-top: 30rpx;
+  background: #fff;
+  padding-left: 30rpx;
+  height: 40rpx;
+  font-size: 35rpx;
+  line-height: 60rpx;
+  padding-top: 20rpx;
+}
+.scroll_box {
+  width: 100%;
+  height: 200rpx;
+  overflow: hidden;
+  background: #fff;
+  white-space: nowrap;
+}
+.item_list {
+  width: 230rpx;
+  height: auto;
+  display: inline-block;
+}
+.content{
+  width: 200rpx;
+  height: 130rpx;
+  margin: 50rpx auto 0;
+  text-align: center;
+  border-radius: 5px;
+  color: #fff;
+  background: #1296db;
+  position: relative;
+}
+.active{
+  background: #00af32;
+}
+.img_sel{
+  position: absolute;
+  width: 40rpx;
+  height: 40rpx;
+  top: 10rpx;
+  right: 10rpx;
+}
+.card_mx{
+  font-size: 35rpx;
+  height: 50rpx;
+  text-align: center;
+  line-height: 120rpx;
+}
+.card_text{
+  margin-top: 20rpx;
+}
+.num,
+.price{
+  font-size: 25rpx;
+}
+.pay_kind{
+  height: 250rpx;
+  width: 100%;
+  background: #fff;
+}
+.mymoney{
+  padding-top: 40rpx;
+}
+.mymoney,
+.wxpay {
+  height: 100rpx;
+  width: 100%;
+}
+.mymoney>text,
+.wxpay>text{
+  float: left;
+  line-height: 100rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.money_icon,
+.wx_icon{
+  width: 75rpx;
+  height: 75rpx;
+  float: left;
+  margin-top: 10rpx;
+  margin-left: 35rpx;
+}
+.check_img{
+  float: right;
+  height: 60rpx;
+  width: 60rpx;
+  margin-top: 20rpx;
+  margin-right: 60rpx;
+  border: 1px solid #999;
+  border-radius: 50%;
+}
+.check_img>image{
+  width: 60rpx;
+  height: 60rpx;
+}
+.checked{
+  border: 1px solid #00af32;
+}
+.btn{
+  width: 80%;
+  height: 80rpx;
+  font-size: 40rpx;
+  line-height: 80rpx;
+  font-weight: 600;
+  margin-top: 60rpx;
+  background: #1296db;
+  color: #fff;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}

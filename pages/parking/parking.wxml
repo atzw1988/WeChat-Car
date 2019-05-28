@@ -1,0 +1,32 @@
+<scroll-view class="table" hidden="{{imgParking}}">
+  <view class="tr bg-w">
+    <view class="th">车牌编号</view>
+    <view class="th">开始时间</view>
+    <view class="th">结束时间</view>
+    <view class="th">支付状态</view>
+    <view class="th">车位编号</view>
+    <view class="th">金额</view>
+  </view>
+  <block wx:for="{{pakingList}}" wx:key="{{index}}">
+    <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+      <view class="td">{{item.car_no}}</view>
+      <view class="td">{{item.parkstart_time}}</view>
+      <view class="td">{{item.parkend_time}}</view>
+      <view class="td">{{item.pay_type}}</view>
+      <view class="td">{{item.park_no}}</view>
+      <view class="td">{{item.charge_money}}元</view>
+    </view>
+    <view class="tr" wx:else>
+      <view class="td">{{item.car_no}}</view>
+      <view class="td">{{item.parkstart_time}}</view>
+      <view class="td">{{item.parkend_time}}</view>
+      <view class="td">{{item.pay_type}}</view>
+      <view class="td">{{item.park_no}}</view>
+      <view class="td">{{item.charge_money}}元</view>
+    </view>
+  </block>
+</scroll-view>
+<view class='img-box' hidden="{{!imgParking}}">
+    <image src='../../img/Recharge-record_icon@2x.png'></image>
+    <text>暂无停车记录哦</text>
+</view>

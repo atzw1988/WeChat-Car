@@ -1,0 +1,72 @@
+.title{
+  font-size: 20px;
+  color: #222222;
+  margin: 27px 0 25px 20px;
+}
+.section{
+  position: relative;
+  width: 335px;
+  height: 50px;
+  font-size: 15px;
+  /* line-height: 20px; */
+  color: #909090;
+  border-bottom: 1px rgb(213, 213, 213) solid;
+  margin: 29px auto;
+  padding: 0
+}
+.section input{
+  line-height: 30px;
+  height: 30px;
+  margin: 10px 0 10px 20px;
+}
+.code_box{
+  position: absolute;
+  right: 0;
+  top: 5px;
+  width: auto;
+  height: 40px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 40px;
+  color: #fff;
+  background-color: #c0c0c0;
+  border-radius: 2px;
+  border: none;
+}
+.getcode_btn{
+  position: absolute;
+  right: 0;
+  top: 5px;
+  width: auto;
+  height: 40px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 40px;
+  color: #fff;
+  background-color: rgb(11, 142, 230);
+  border-radius: 2px;
+  border: none;
+}
+
+button[disabled][type="default"], wx-button[disabled]:not([type]) {
+  color:#fff;
+  background-color:#c0c0c0;
+  border: none;
+}
+
+
+.getPhone_btn{
+  width: 306px;
+  height: 35px;
+  font-size: 20px;
+  color: #fff;
+  text-align: center;
+  line-height: 35px;
+  background-color: rgb(192, 192, 192);
+  border-radius: 8px;
+  margin: 21px auto 0px;
+}
+
+.setPhone_btn{
+  background-color: rgb(25, 115, 231);
+}

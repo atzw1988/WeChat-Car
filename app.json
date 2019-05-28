@@ -1,0 +1,37 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/parkingList/parkingList",
+        "pages/person/person",
+        "pages/carNumber/carNumber",
+        "pages/help/help",
+        "pages/bindphone/bindphone",
+        "pages/endbilling/endbilling",
+        "pages/refund/refund",
+        "pages/parking/parking",
+        "pages/plate1/plate1",
+        "pages/payfor/payfor",
+        "pages/mywallet/mywallet",
+        "pages/mycar/mycar",
+        "pages/myquery/myquery",
+        "pages/allpark/allpark",
+        "pages/detailList/detailList",
+        "pages/daozhapark/daozhapark",
+        "pages/daozhapay/daozhapay",
+        "pages/mycard/mycard",
+        "pages/selcar/selcar",
+        "pages/selpark/selpark",
+        "pages/cardpay/cardpay"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTextStyle": "black"
+    },
+    "permission": {
+        "scope.userLocation": {
+            "desc": "您的位置信息将用于小程序位置接口的效果展示"
+        }
+    },
+    "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,49 @@
+<!--pages/selpark/selpark.wxml-->
+<view class="search">
+  <view class="search_park">
+    <input 
+    class="search_cont"
+    confirm-type='search'
+    bindinput="parking_name"
+    bindconfirm='search_park'
+    type="text"
+    name="search_park"
+    id="0"
+    placeholder="输入停车场路段搜索停车场">
+    </input>
+  </view>
+  <view class="search-result">
+    <scroll-view scroll-y="true" bindscrolltolower="searchScrollLower">
+      <view class="parking-list-section center" wx:for="{{searchSongList}}" wx:key="lcokParking" data-data="{{item}}" data-index="{{item.parking_weiyi_no}}" bindtap='to_pay_card' id='{{index}}'>
+        <view class="content">
+          <view class="parking-list-item flex">
+            <view class="parking-name">{{item.parkName}}</view>
+          </view>
+          <view class="parking-list-item flex">
+            <view class="u-1of2 plain-text">
+              总车位数:
+              <view class="parking-distance">{{item.parkNum}}</view>
+            </view>
+            <view class="plain-text">
+              剩余月卡名额:
+              <view class="left-number">{{item.cardNum - item.alreadyNum}}</view>
+            </view>
+          </view>
+          <view class="parking-list-item flex">
+            <view class="plain-text">
+              详细地址:
+              <view class="parking-distance">{{item.address}}</view>
+            </view>
+          </view>
+        </view>
+        <image class="arrow-right" src="../../img/arrow_icon@2x.png"></image>
+      </view>
+      <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>
+      <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>
+    </scroll-view>
+    <view class='img-box' hidden="{{!imgParking}}">
+      <image src='../../img/Recharge-record_icon@2x.png'></image>
+      <text>暂无停车场哦</text>
+    </view>
+  </view>
+</view>
