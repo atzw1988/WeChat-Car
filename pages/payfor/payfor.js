@@ -136,11 +136,18 @@ Page({
                                 method: 'GET',
                                 success: function (res) {
                                     console.log(res)
-                                    wx.showToast({
-                                        title: '支付成功',
-                                        image: '../../img/chenggong.png'
-                                    })
-                                    that.onShow();
+                                    if (res.data.success){
+                                        wx.showToast({
+                                            title: '支付成功',
+                                            image: '../../img/chenggong.png'
+                                        })
+                                        that.onShow();
+                                    }else{
+                                        wx.showToast({
+                                            title: '支付失败',
+                                            image: '../../img/shibai.png'
+                                        })
+                                    }
                                 }
                             })
                             // that.setData({ 

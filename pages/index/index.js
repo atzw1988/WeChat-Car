@@ -123,8 +123,8 @@ Page({
                     },
                     method: 'GET',
                     success: function (res) {
-                        console.log(res.data.data)
-                        if(!res.data.data){
+                        console.log(res)
+                        if(!res.data.data && !res.data.success){
                             wx.showModal({
                                 title: '温馨提示',
                                 content: '您尚未绑定车牌，请先绑定车牌！',
@@ -175,7 +175,6 @@ Page({
                         'content-type': 'application/x-www-form-urlencoded' // 默认值
                     },
                     success:function(res){
-                        console.log(res)
                         if(res.data.success){
                             if (res.data.data) {
                                 that.setData({
@@ -187,7 +186,6 @@ Page({
                                 let start = res.data.data.parkstart_time
                                 let timenow = Date.parse(new Date());
                                 let timepoor = Math.ceil((timenow - start) / 60000)
-                                console.log(timepoor)
                                 that.setData({
                                     parkTime: timepoor
                                 })
@@ -196,7 +194,6 @@ Page({
                                         parkTime: that.data.parkTime + 1,
                                         // consumedMoney: Math.ceil(that.data.parkTime / 30) * 2
                                     })
-                                    console.log(that.data.parkTime)
                                 }, 60000)
                             } else {
                                 that.setData({
@@ -256,7 +253,6 @@ Page({
         wx.getLocation({
             type: 'wgs84', //返回可以用于wx.openLocation的经纬度
             success: function (res) {
-                console.log(res)
                 var latitude = res.latitude;
                 var longitude = res.longitude;
                 // 实例化API核心类
@@ -279,7 +275,6 @@ Page({
                         })
                         // 获取最近三个停车场
                         app.func.req('/park/selectlcpark', { area_code: res.result.ad_info.adcode, lat: res.result.location.lat, lng: res.result.location.lng}, function (res) {
-                        // console.log(res)
                             if(res.success){
                                 let searchList = [];
                                 if (res.data.map.length > 0) {
@@ -292,7 +287,6 @@ Page({
                                     that.setData({
                                         searchSongList: that.data.searchSongList.concat(searchList) //获取数据数组  
                                     });
-                                    // console.log(that.data.searchSongList)
                                     let length = that.data.searchSongList.length
                                     let allnum = 0
                                     for (var i = 0; i < length; i++) {
@@ -400,7 +394,6 @@ Page({
     //结束停车
     stopPark: function(e){
         var that = this
-        console.log(e)
         let formid = e.detail.formId
         wx.showModal({
             title: '温馨提示',
@@ -410,7 +403,6 @@ Page({
                     wx.getStorage({
                         key: 'userID',
                         success: function (res) {
-                            console.log(formid)
                             wx.request({
                                 url: http.reqUrl + '/end/parking',
                                 data: {
@@ -422,7 +414,6 @@ Page({
                                 },
                                 method: 'POST',
                                 success: function (res) {
-                                    console.log(res)
                                     if(res.data.success == true){
                                         clearInterval(that.data.time1)
                                         wx.setStorage({
@@ -558,7 +549,6 @@ Page({
                     success: function (res) {
                         if(res.data.success){
                             if (res.data.data != null) {
-                                console.log(1)
                                 let length = res.data.data.length
                                 let time = res.data.data
                                 if (time.some(function (time) { return time.pay_type == 0 && time.parkend_time != undefined && time.charge_money > 0 })) {
@@ -613,8 +603,6 @@ Page({
         });
     },
     bindParkingListItemTap: function(e){
-        console.log(e.currentTarget.dataset.index);
-        console.log(e.currentTarget.dataset.data);
         wx.setStorage({
             key: 'lockDetailList',
             data: e.currentTarget.dataset.index,

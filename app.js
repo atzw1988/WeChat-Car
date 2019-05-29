@@ -33,7 +33,6 @@ App({
                     },
                     success: function (res) {
                         // 获取用户当前所在区域
-                        // console.log(res)
                         var oAddress = res.result.address_component.district;
                         wx.setStorage({
                             key: 'oAddress',
@@ -41,7 +40,6 @@ App({
                         });
                         wx.login({
                             success: function (res) {
-                                console.log(res)
                                 wx.request({
                                     url: http.reqUrl + '/xiaoLogin',
                                     data: {
@@ -54,7 +52,6 @@ App({
                                     },
                                     success: function (res) {
                                         if(res.data.success){
-                                            console.log(res)
                                             wx.hideLoading();
                                             wx.setStorage({
                                                 key: 'token',
@@ -71,30 +68,25 @@ App({
                                         }
                                         if(res.data.fail){
                                             wx.hideLoading();
-                                            console.log('login出错');
                                             wx.showModal({
                                                 title: '提示',
                                                 content: '登录异常，请稍后重试',
                                                 showCancel: false,
                                                 success: function (res) {
                                                     if (res.confirm) {
-                                                        console.log('用户点击确定');
                                                     }
                                                 }
                                             });
                                         }
                                     },
                                     fail: function (res) {
-                                        console.log(res)
                                         wx.hideLoading();
-                                        console.log('login出错');
                                         wx.showModal({
                                             title: '提示',
                                             content: '微信登录出错，请重新进入小程序或清除下缓存！',
                                             showCancel: false,
                                             success: function (res) {
                                                 if (res.confirm) {
-                                                console.log('用户点击确定');
                                                 }
                                             }
                                         });

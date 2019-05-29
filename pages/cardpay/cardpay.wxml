@@ -19,7 +19,7 @@
   <view class="header_text">请选择月卡种类</view>
   <view class="scroll_box">
     <scroll-view class="scroll-view_x" scroll-x style="width: auto;overflow:hidden;">
-      <view class="item_list" wx:for="{{card_kind}}" wx:key="{{item.id}}">
+      <view class="item_list" wx:for="{{card_kind}}" wx:key="{{item.cardId}}">
         <view class="content  {{item.checked? 'active':''}}" bindtap='sel_card' id="{{index}}">
           <image wx:if="{{item.checked}}" class="img_sel" src="../../img/guanbi.png"></image>
           <view class="card_mx">

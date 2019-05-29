@@ -2,9 +2,9 @@
 </scroll-view>
 <view hidden="{{imgParking}}">    
     <view class='line-box'>
-        <view class='line-one'></view>
-        <text class='line-text'>尚未付清的停车</text>
-        <view class='line-two'></view>
+        <!-- <view class='line-one'></view> -->
+        <text class='line-text'>尚未付清的停车费用</text>
+        <!-- <view class='line-two'></view> -->
     </view>
     <view>
         <view class='money'>{{parkingList.charge_money}}元</view>

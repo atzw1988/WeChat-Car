@@ -1,9 +1,7 @@
-// var rootDocment = 'http://192.168.0.116:8080/PayPay/wechat';
-// var rootDocment1 = 'http://192.168.0.116:8080/PayPay';
 var rootDocment = 'https://www.lcgxlm.com/its/wechat';
 // var rootDocment = 'http://192.168.1.104:13259/its/wechat';
-// var rootDocment1 = 'https://www.lcgxlm.com/PayPay';
 var rootDocment1 = 'https://www.lcgxlm.com/its/wechat';
+// var rootDocment1 = 'http://192.168.1.104:13259/its/wechat';
 function req(url, data, cb) {
     wx.request({
         url: 'https://www.lcgxlm.com/its/wechat' + url,

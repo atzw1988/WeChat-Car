@@ -58,17 +58,20 @@ Page({
                     },
                     method:'GET',
                     success: res => {
-                        console.log(res)
                         if (res.data.success){
-                            
                             res.data.data.forEach(item => {
                                 item.checked = false
                             })
-                            res.data.data[1].checked = true
+                            if(res.data.data.length > 1){
+                                res.data.data[1].checked = true
+                                this.data.sel_card_kind = res.data.data[1]
+                            }else{
+                                res.data.data[0].checked = true
+                                this.data.sel_card_kind = res.data.data[0]
+                            }
                             this.setData({
                                 card_kind: res.data.data
                             }) 
-                            this.data.sel_card_kind = this.data.card_kind[1]
                         }
                     }
                 })

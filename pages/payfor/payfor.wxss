@@ -52,9 +52,9 @@
   /* margin: 0 12px;
   float: left; */
 }
-.line-one{
+/* .line-one{
   display: block;
-  width: 88px;
+  width: 80px;
   border: 1rpx #f8f8f8 solid;
   float: left;
   margin-top: 13px;
@@ -65,7 +65,7 @@
   border: 1rpx #f8f8f8 solid;
   float: right;
   margin-top: 13px;
-}
+} */
 
 .park_info{
   margin-top: 30px;

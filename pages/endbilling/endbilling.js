@@ -107,14 +107,22 @@ Page({
                                     'content-type': 'application/x-www-form-urlencoded', // 默认值
                                 },
                                 method: 'GET',
-                                success: function(){
-                                    wx.showToast({
-                                        title: '支付成功',
-                                        image: '../../img/chenggong.png'
-                                    })
-                                    wx.navigateTo({
-                                        url: '../index/index',
-                                    })
+                                success: function(res){
+                                    console.log(res)
+                                    if (res.data.success){
+                                        wx.showToast({
+                                            title: '支付成功',
+                                            image: '../../img/chenggong.png'
+                                        })
+                                        wx.navigateTo({
+                                            url: '../index/index',
+                                        })
+                                    }else{
+                                        wx.showToast({
+                                            title: '支付失败',
+                                            image: '../../img/shibai.png'
+                                        })
+                                    }
                                 }
                             })
                         }

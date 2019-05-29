@@ -37,12 +37,6 @@
     <view class='flt person-title'>退款记录</view>
     <image class='arrow1' src='../../img/arrow_icon@2x.png'></image>
   </view> -->
- 
-  
-  
-  
-  
-
   <!-- <view class='refunds_box clearfix' bindtap='refundList'>
     <view class='flt person-title'>我的车位</view>
     <image class='arrow1' src='../../img/arrow_icon@2x.png'></image>
