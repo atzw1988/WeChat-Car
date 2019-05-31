@@ -68,7 +68,7 @@ Page({
                 wx.getStorage({
                     key: 'card_park_name',
                     success: () => {
-                        wx.navigateTo({
+                        wx.redirectTo({
                             url: '../cardpay/cardpay'
                         })
                     },

@@ -1,30 +1,26 @@
 <scroll-view class="table" hidden="{{imgParking}}">
-  <view class="tr bg-w">
-    <view class="th">车牌编号</view>
-    <view class="th">开始时间</view>
-    <view class="th">结束时间</view>
-    <view class="th">支付状态</view>
-    <view class="th">车位编号</view>
-    <view class="th">金额</view>
-  </view>
-  <block wx:for="{{pakingList}}" wx:key="{{index}}">
-    <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
-      <view class="td">{{item.car_no}}</view>
-      <view class="td">{{item.parkstart_time}}</view>
-      <view class="td">{{item.parkend_time}}</view>
-      <view class="td">{{item.pay_type}}</view>
-      <view class="td">{{item.park_no}}</view>
-      <view class="td">{{item.charge_money}}元</view>
-    </view>
-    <view class="tr" wx:else>
-      <view class="td">{{item.car_no}}</view>
-      <view class="td">{{item.parkstart_time}}</view>
-      <view class="td">{{item.parkend_time}}</view>
-      <view class="td">{{item.pay_type}}</view>
-      <view class="td">{{item.park_no}}</view>
-      <view class="td">{{item.charge_money}}元</view>
-    </view>
-  </block>
+    <block wx:for="{{pakingList}}" wx:key="{{index}}">
+        <view class='content'>
+            <view class='header'>
+                <text class="carno">{{item.car_no}}</text>
+                <text class="status">{{item.pay_type}}</text>
+            </view>
+            <view class="main">
+                <view class="up">
+                    <text class="starttime">开始时间:{{item.parkstart_time}}</text>
+                    <text class="time">{{item.buy_time}}</text>
+                </view>
+                <view class="modile">
+                    <text class="endtime">结束时间:{{item.parkend_time}}</text>
+                    <text class="money">{{item.charge_money}}元</text>
+                </view>
+                <view class="down">
+                    <text class="parkname">{{item.parking_name}}</text>
+                    <text class="parkno">车位:{{item.park_no}}</text>
+                </view>
+            </view>
+        </view>
+    </block>
 </scroll-view>
 <view class='img-box' hidden="{{!imgParking}}">
     <image src='../../img/Recharge-record_icon@2x.png'></image>

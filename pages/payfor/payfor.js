@@ -43,16 +43,12 @@ Page({
 
     },
     onShow: function () {
-        wx.showLoading({
-            title: '加载中',
-        })
         var that = this;
         wx.getStorage({
             key: 'userID',
             success(res) {
-                // console.log(res)
                 that.setData({
-                    userId: res.data + ""
+                    userId: res.data
                 })
                 wx.request({
                     url: http.reqUrl +'/query/parkOrde',
@@ -65,35 +61,35 @@ Page({
                     method: 'POST',
                     success: function (res) {
                         if (res.data.data!=null){
-                            let length = res.data.data.length
-                            let time = res.data.data
-                            if (time.some(function (time) { return time.pay_type == 0 && time.parkend_time != undefined && time.charge_money > 0 })) {
-                                that.setData({
-                                    imgParking: false
+                            let arr = res.data.data.filter(item => {
+                                return item.pay_type == 0 && item.parkend_time != undefined && item.charge_money > 0
+                            })
+                            if(arr.length == 1){
+                                arr.forEach(item => {
+                                    item.parkstart_time = http.formatDatenew(item.parkstart_time)
+                                    item.parkend_time = http.formatDatenew(item.parkend_time)
+                                    if (item.buy_time < 60) {
+                                        item.buy_time = item.buy_time + '分钟'
+                                    } else if (item.buy_time == 60) {
+                                        item.buy_time = '1小时'
+                                    } else {
+                                        item.buy_time = Math.floor(item.buy_time / 60) + '小时' + item.buy_time % 60 + '分钟'
+                                    }
                                 })
-                            }
-                            if (time.every(function (time) { return time.pay_type == 1 || time.charge_money == 0 })) {
+                                that.setData({
+                                    imgParking: false,
+                                    parkingList: arr[0]
+                                })
+                            }else{
                                 that.setData({
                                     imgParking: true
                                 })
                             }
-                            for (var i = 0; i < length; i++) {
-                                if (time[i].pay_type == 0 && time[i].charge_money != 0) {
-                                    time[i].pay_type = "未支付"
-                                    time[i].parkstart_time = http.formatDatenew(time[i].parkstart_time)
-                                    time[i].parkend_time = http.formatDatenew(time[i].parkend_time)
-                                    that.setData({
-                                        parkingList: time[i]
-                                    })
-                                } 
-                            }
-                            
                         }else{
                             that.setData({
                                 imgParking: true
                             })
                         }                    
-                        wx.hideLoading();
                     }
                 })
             }
@@ -119,7 +115,6 @@ Page({
                     },
                     method: 'GET',
                     success: function (res) {
-                        console.log(res)
                         let mymoney = res.data.data
                         if (mymoney >= that.data.parkingList.charge_money) {
                             console.log(that.data.parkingList.order_no)
@@ -135,13 +130,15 @@ Page({
                                 },
                                 method: 'GET',
                                 success: function (res) {
-                                    console.log(res)
                                     if (res.data.success){
                                         wx.showToast({
-                                            title: '支付成功',
-                                            image: '../../img/chenggong.png'
+                                            title: '余额支付成功',
+                                            image: '../../img/chenggong.png',
+                                            duration: 2000,
+                                            success	: function(){
+                                                that.onShow();
+                                            }
                                         })
-                                        that.onShow();
                                     }else{
                                         wx.showToast({
                                             title: '支付失败',

@@ -74,7 +74,6 @@ Page({
                         })
                         // 获取当前区域
                         oAddress = res.result.address_component.district;
-                        console.log(oAddress)
                         app.func.req('/parking/parkInfo', {address: oAddress}, function (res) {
                             if (res.success){
                                 if (res.data.length > 0) {
@@ -113,8 +112,6 @@ Page({
                             let searchList = [];
                             let mypark = []
                             searchList = res.data.map
-                            console.log(searchList)
-                            console.log(that.data.distance)
                             if (res.data.map.length > 0) {
                                 for (var i = 0; i < res.data.map.length; i++) {
                                     if (searchList[i].distance < that.data.distance) {
@@ -238,7 +235,6 @@ Page({
             let searchList = [];
             let mypark = []
             searchList = res.data.map
-            console.log(searchList)
             if (res.data.map.length > 0) {
                 that.setData({
                     imgParking: true

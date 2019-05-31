@@ -53,7 +53,8 @@ Page({
         parknum:0 ,   //车位数量
         choose:false,
         showModalStatus:false,
-        get_user_phone:false
+        get_user_phone:false,
+        phone_num:false   //判断用户是否绑定手机
     },
     //加载腾讯地图
     onReady: function (e) {
@@ -63,9 +64,6 @@ Page({
         var that = this;    
     },
     onUnload: function(){
-        // wx.navigateTo({
-        //     url: '../index/index',
-        // })
     },  
     onShow: function(){
         // 转发
@@ -144,7 +142,7 @@ Page({
             }
         })
         app.getUserInfo(function (userInfo) {
-        //更新数据
+            //更新数据
             // if (!userInfo.ofoInfo) {
             //     setTimeout(function () {
             //       wx.navigateTo({
@@ -347,7 +345,7 @@ Page({
             hasUserInfo: true
         })
     },
-  // 监听markers
+    // 监听markers
     markertap(e) {
         var oData = {
                 address: oAddress,
@@ -520,6 +518,37 @@ Page({
         }
         return long;
     },
+    getPhoneNumber: function (e) {
+        wx.getStorage({
+            key: 'userID',
+            success: function(res) {
+                let userid = res.data
+                wx.getStorage({
+                    key: 'session_key',
+                    success: function (res) {
+                        let session_key = res.data
+                        wx.request({
+                            url: 'http://192.168.1.104:13259/its/wechat/obtain/mobile',
+                            data: {
+                                userId: userid,
+                                iv: e.detail.iv,
+                                session_key: session_key,
+                                encryptedData: e.detail.encryptedData
+                            },
+                            method: 'POST',
+                            header: {
+                                'content-type': 'application/x-www-form-urlencoded'
+                            },
+                            success: res => {
+                                console.log(res)
+                            }
+                        })
+                    }
+                })
+            }
+        })   
+        this.stopCar()
+    },
     //点击选择停车种类
     stopCar: function(){
         this.parkone()
@@ -667,12 +696,6 @@ Page({
                 })
             }
         }.bind(this), 400)       
-    },
-    getPhoneNumber: function (e) {
-        console.log(1)
-        console.log(e.detail.errMsg)
-        console.log(e.detail.iv)
-        console.log(e.detail.encryptedData)
     }
 });
 

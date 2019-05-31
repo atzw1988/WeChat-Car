@@ -10,22 +10,20 @@
         <view class='money'>{{parkingList.charge_money}}元</view>
         <view class='park_list clearfix'>
             <view class='park_info1'>
-                <!-- <view class='park_title'>停车车牌</view>
-                <view class='park_cont'>{{parkingList.car_no}}</view> -->
                 <text class='park_title'>停车车牌</text>
                 <text class='park_cont1'>{{parkingList.car_no}}</text>    
             </view>
             <view class='park_info1'>
-                <!-- <view class='park_title'>停车时长</view>
-                <view class='park_cont'>{{parkingList.buy_time}}分钟</view> -->
                 <text class='park_title'>停车时长</text>
-                <text class='park_cont1'>{{parkingList.buy_time}}分钟</text>        
+                <text class='park_cont1'>{{parkingList.buy_time}}</text>        
             </view>
             <view class='park_info1'>
-                <!-- <view class='park_title'>车位编码</view>
-                <view class='park_cont'>{{parkingList.park_no}}</view> -->
                 <text class='park_title'>车位编码</text>
                 <text class='park_cont1'>{{parkingList.park_no}}</text>             
+            </view>
+            <view class='park_info1'>
+                <text class='park_title'>停车场名字</text>
+                <text class='park_cont1'>{{parkingList.parking_name}}</text>
             </view>
             <view class='park_info1'>
                 <text class='park_title'>停车开始时间</text>

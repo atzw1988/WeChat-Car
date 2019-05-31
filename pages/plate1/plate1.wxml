@@ -41,12 +41,12 @@
   </view> -->
     <block wx:if="{{currentPos!=null}}">
         <view class="flex plate-keyboard-container" wx:if="{{currentPos==0}}">
-            <block wx:for="{{plateAreaCharset}}">
+            <block wx:for="{{plateAreaCharset}}" wx:key="{{index}}">
                 <view class="plate-keyborad-key" hover-stay-time='100' hover-class="plate-keyborad-key-hover" data-char='{{item}}' bindtap="bindKeyTap1">{{item}}</view>
             </block>
         </view>
         <view class="flex plate-keyboard-container" wx:else>
-            <block wx:for="{{plateDigitCharset}}">
+            <block wx:for="{{plateDigitCharset}}" wx:key="{{index}}">
                 <view class="plate-keyborad-key" hover-stay-time='100' hover-class="plate-keyborad-key-hover" data-char='{{item}}' bindtap="bindKeyTap1">{{item}}</view>
             </block>
         </view>

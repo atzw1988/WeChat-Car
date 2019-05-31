@@ -22,7 +22,6 @@ Page({
     },
     //获取用户的车牌列表
     onShow: function(){
-        console.log(1)
         var that = this;
         wx.getStorage({
             key: 'userID',
@@ -37,7 +36,6 @@ Page({
                     },
                     method: 'GET',
                     success: function (res) {
-                        console.log(res.data.data)
                         if (res.data.success){
                             that.setData({
                                 carNumber: res.data.data
@@ -62,31 +60,57 @@ Page({
     delmycar: function(res){
         var that = this
         let num = res.target.id
-        console.log(res.target.id)
         let carno = that.data.carNumber
-        wx.showModal({
-            title: '温馨提示',
-            content: '车辆信息删除后将不能找回，您是否确定要删除该车辆信息',
-            success(res) {
-                if (res.confirm) {
-                    wx.request({
-                        url: http.reqUrl+'/delete/carNo',
-                        data: {
-                            id: that.data.carNumber[num].id
-                        },
-                        header: {
-                            'content-type': 'application/x-www-form-urlencoded' // 默认值
-                        },
-                        method: 'GET',
-                        success: function (res) {
-                            that.onShow()     
+        let id = that.data
+        wx.getStorage({
+            key: 'userID',
+            success: (res) => {
+                let userID = res.data
+                wx.showModal({
+                    title: '温馨提示',
+                    content: '车辆信息删除后将不能找回，您是否确定要删除该车辆信息',
+                    success(res) {
+                        if (res.confirm) {
+                            wx.request({
+                                url: http.reqUrl + '/delete/carNo',
+                                data: {
+                                    userId: userID,
+                                    id: carno[num].id,
+                                    carNo: carno[num].car_no
+                                },
+                                header: {
+                                    'content-type': 'application/x-www-form-urlencoded' // 默认值
+                                },
+                                method: 'GET',
+                                success: function (res) {
+                                    console.log(res)
+                                    if(res.data.code == 813){
+                                        wx.showModal({
+                                            title: '删除失败',
+                                            content: '该车牌还有未缴车费，是否前去付款',
+                                            success(res) {
+                                                if (res.confirm) {
+                                                    wx.redirectTo({
+                                                        url:'../payfor/payfor'
+                                                    })
+                                                } else if (res.cancel) {
+                                                }
+                                            }
+                                        })
+                                    }else if(res.data.code == 0){
+                                        wx.showToast({
+                                            title: '删除成功',
+                                        })
+                                        that.onShow()
+                                    }  
+                                }
+                            })
+                        } else if (res.cancel) {
+                            return;
                         }
-                    })
-                } else if (res.cancel) {
-                    return;
-                }
+                    }
+                }) 
             }
-        })    
-        
+        })       
     }
 });

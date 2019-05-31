@@ -1,18 +1,18 @@
 <!--pages/mycard/mycard.wxml-->
-<scroll-view>
+<scroll-view bindscrolltolower="get_more">
   <block wx:for="{{cards_list}}" wx:key="{{index}}">
     <view class='mycard'>
       <view class="card_header">
         <image class="car_icon" src='../../img/chepai.png'></image>
-        <text>{{item.car_no}}</text>
+        <text>{{item.carNo}}</text>
       </view>
       <view class="card_kind">
-        <text>{{item.name}}</text>
+        <text>{{item.typeName}}</text>
       </view>
-      <text class="park_name">{{item.road_name}}</text>
-      <text class="end_time">到期时间:{{item.time}}</text>
+      <text class="park_name">{{item.parkName}}</text>
+      <text class="end_time">到期时间:{{item.expirationTime}}</text>
       <text class="more_pay" bindtap='to_renewal' id='{{index}}'>续费>></text>
-      <image hidden='{{item.overdue}}' class="overdue" src="../../img/yiguoqi.png"></image>
+      <image hidden='{{item.state == 1}}' class="overdue" src="../../img/yiguoqi.png"></image>
     </view>
   </block>
   <view class='header clearfix' bindtap='addmycar'>

@@ -51,6 +51,7 @@ App({
                                         'content-type': 'application/x-www-form-urlencoded'
                                     },
                                     success: function (res) {
+                                        console.log(res)
                                         if(res.data.success){
                                             wx.hideLoading();
                                             wx.setStorage({
@@ -58,13 +59,19 @@ App({
                                                 data: res.data.data.token,
                                                 complete: function () {
                                                 }
-                                            });
+                                            })
                                             wx.setStorage({
                                                 key: 'userID',
                                                 data: res.data.data.userId,
                                                 complete: function () {
                                                 }
-                                            });
+                                            })
+                                            wx.setStorage({
+                                                key: 'session_key',
+                                                data: res.data.data.session_key,
+                                                complete: function () {
+                                                }
+                                            })
                                         }
                                         if(res.data.fail){
                                             wx.hideLoading();

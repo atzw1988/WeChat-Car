@@ -48,30 +48,35 @@ Page({
                     success: function (res) {
                         console.log(res)
                         if(res.data.data!=null){
-                            let length = res.data.data.length
+                            // let length = res.data.data.length
                             let time = res.data.data
-                            for (var i = 0; i < length; i++) {
-                                time[i].parkstart_time = http.formatDatenew(time[i].parkstart_time)
-                                if (time[i].parkend_time) {
-                                    time[i].parkend_time = http.formatDatenew(time[i].parkend_time)
-                                } else {
-                                    time[i].parkend_time = '还未结束'
-                                }
-                                if (time[i].pay_type == 1) {
-                                    time[i].pay_type = "已支付"
-                                } else if (time[i].charge_money == 0){
-                                    time[i].pay_type = "已支付"
-                                } else {
-                                    time[i].pay_type = "未支付"
-                                }
-                            }
+                            time.forEach(item => {
+                              item.parkstart_time = http.formatDatenew(item.parkstart_time)
+                              if (item.parkend_time){
+                                item.parkend_time = http.formatDatenew(item.parkend_time)
+                              }else{
+                                item.parkend_time = '还未结束'
+                              }
+                              if (item.pay_type == 1 && item.charge_money != 0){
+                                item.pay_type = '已支付'
+                              } else if (item.charge_money == 0){
+                                item.pay_type = '无需支付'
+                              }else{
+                                item.pay_type = "未支付"
+                              }
+                              if (item.buy_time < 60 ){
+                                item.buy_time = item.buy_time + '分钟'
+                              } else if (item.buy_time == 60){
+                                item.buy_time = '1小时'
+                              }else{
+                                item.buy_time = Math.floor(item.buy_time / 60) + '小时' + item.buy_time % 60 + '分钟'
+                              }
+                            })
                             that.setData({
-                                pakingList: res.data.data
+                                pakingList: time
                             })
                         }                       
                         //根据返回的对象是否为空控制显示
-                        // console.log(that.data.pakingList.length)
-                        // console.log(that.data.pakingList==0)
                         if(that.data.pakingList==0){
                             that.setData({
                                 imgParking:true

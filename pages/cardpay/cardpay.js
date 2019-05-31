@@ -8,13 +8,7 @@ Page({
         car_no:'',
         park_name:'',
         park_no:'',
-        card_kind:[
-            {id:1,name:'月卡',price:100,num:1,checked:false},
-            {id:3,name:'季卡',price:100,num: 3,checked: true},
-            {id:6,name:'半年卡',price:100,num: 6,checked: false},
-            {id:12,name:'年卡',price:100,num: 12,checked: false},
-            {id:24,name:'两年卡',price:100,num:24,checked:false} 
-        ],
+        card_kind:[],
         sel_card_kind:{},
         pay_checked:true
     },
@@ -114,12 +108,12 @@ Page({
         }
     },
     to_sel_car(){
-        wx.navigateTo({
+        wx.redirectTo({
             url: '../selcar/selcar',
         })       
     },
     to_sel_park(){
-        wx.navigateTo({
+        wx.redirectTo({
             url: '../selpark/selpark',
         })
     }

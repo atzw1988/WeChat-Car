@@ -22,7 +22,7 @@ Page({
     bindGetUserInfo(e) {
         console.log(e.detail.userInfo)
     },
-  onLoad:function(){
+    onLoad:function(){
         // 查看是否授权
         wx.getSetting({
             success(res) {
@@ -45,7 +45,6 @@ Page({
         wx.getStorage({
             key: 'userID',
             success(res) {
-                // console.log(res)
                 that.setData({
                     userId: res.data + ""
                 })
@@ -59,7 +58,6 @@ Page({
                     },
                     method: 'POST',
                     success: function (res) {
-                        // console.log(res)
                         if(res.data.data!=null){
                             that.setData({
                                 pakingList: res.data.data
@@ -69,14 +67,17 @@ Page({
                                     parkNum: res.data.data.length
                                 })
                             }
-                            let length = res.data.data.length
-                            let time = res.data.data
-                            for (var i = 0; i < length; i++) {
-                                if (time[i].pay_type == 0) {
-                                    that.setData({
-                                        payfor: time[i].charge_money
-                                    })
-                                }
+                            let arr = res.data.data.filter(item => {
+                                return item.pay_type == 0
+                            })
+                            if(arr.length == 1){
+                                that.setData({
+                                    payfor: arr[0].charge_money
+                                })
+                            }else{
+                                that.setData({
+                                    payfor: 0
+                                })
                             }
                             wx.hideLoading();
                         }else{
@@ -94,50 +95,6 @@ Page({
     bindGetUserInfo(e) {
         console.log(e.detail.userInfo)
     },
-    // wx.showShareMenu({
-    //   withShareTicket: true
-    // });
-    // var that = this;
-    // wx.getStorage({
-    //   key: 'userInfo',
-    //   success: function (res) {
-
-    //     that.setData({
-    //       userInfo: res.data
-    //     })
-    //   }
-    // });
-    // wx.getStorage({
-    //   key: 'plateNo',
-    //   success: function (res) {
-
-    //     that.setData({
-    //       userNo: res.data
-    //     })
-    //   }
-    // });
-    // wx.getStorage({
-    //   key: 'userID',
-    //   success: function (res) {
-    //     var oData = {
-    //       id: res.data,
-    //       sign: 2
-    //     }
-    //     app.func.req('/appuser/parkrecord', oData, function (res) {
-
-    //       that.setData({
-    //         parkNum: res.tr
-    //       });
-    //     });
-    //   }
-    // });
-//   },
-
-//   userNo: function(){
-//     wx.navigateTo({
-//       url: '../plate1/plate1'
-//     });
-//   },
     parkingList: function(){
         wx.navigateTo({
             url: '../parking/parking'

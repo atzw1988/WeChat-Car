@@ -256,14 +256,42 @@ Page({
                         },
                         method: 'GET',
                         success: function (res) {
-                            wx.navigateBack({     //跳转车辆管理页面并刷新
-                                url: '../mycar/mycar',
-                                success:function(e){
-                                    var page = getCurrentPages().pop();
-                                    if (page == undefined || page == null) return;
-                                    page.onLoad(); 
-                                }
-                            })
+                            console.log(res)
+                            if(res.data.code == 0){
+                                wx.navigateBack({     //跳转车辆管理页面并刷新
+                                    url: '../mycar/mycar',
+                                    success: function (e) {
+                                        var page = getCurrentPages().pop();
+                                        if (page == undefined || page == null) return;
+                                        page.onLoad();
+                                        wx.showToast({
+                                            title: '添加成功!',
+                                            image: '../../img/chenggong.png'
+                                        })
+                                    }
+                                })
+                            }else if(res.data.code == 11001){
+                                wx.showToast({
+                                    title: '车牌重复!',
+                                    image: '../../img/shibai.png'
+                                })
+                            }else if(res.data.code == 11003){
+                                // wx.showToast({
+                                //     title: '该车牌已被其他<br/>用户添加!',
+                                //     // image: '../../img/shibai.png'
+                                //     type:'warn'
+                                // })
+                                wx.showModal({
+                                    title: '温馨提示',
+                                    content: '该车牌已被其他用户添加!',
+                                    showCancel:false
+                                })
+                            }else{
+                                wx.showToast({
+                                    title: '添加失败!',
+                                    image: '../../img/shibai.png'
+                                })
+                            }
                         }
                     })
                 }
