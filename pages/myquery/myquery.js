@@ -13,7 +13,7 @@ Page({
         state: ['到账','未到账'],
         pay_id: '',
         queryList: [],
-        userId:'',
+        mobile:'',
         imgParking:false
     },
 
@@ -40,37 +40,43 @@ Page({
         })
         var that = this;
         wx.getStorage({
-            key: 'userID',
+            key: 'mobile',
             success(res) {
                 // console.log(res)
                 that.setData({
-                    userId: res.data + ""
+                    mobile: res.data + ""
                 })
                 wx.request({
                     url: http.reqUrl +'/query/Recharge',
                     data: {
-                        id: that.data.userId
+                        mobile: that.data.mobile
                     },
                     header: {
                         'content-type': 'application/x-www-form-urlencoded' // 默认值
                     },
                     method: 'POST',
                     success: function (res) {
-                        console.log(res.data.data)
-                        let bill = res.data.data
-                        bill.forEach(item => {
-                            item.jin_e = (item.jin_e / 100).toFixed(2)
-                        })
-                        for(var i=0;i<bill.length;i++){
-                            bill[i].pay_date = http.formatDatenew((bill[i].pay_date-0))
-                        }
-                        that.setData({
-                            queryList:res.data.data
-                        })
-                        if (that.data.queryList.length!=0){
-                            that.setData({
-                                imgParking: true
+                        console.log(res)
+                        if (res.data.data != null && res.data.success){
+                            let bill = res.data.data
+                            bill.forEach(item => {
+                                item.jin_e = (item.jin_e / 100).toFixed(2)
                             })
+                            for (var i = 0; i < bill.length; i++) {
+                                bill[i].pay_date = http.formatDatenew((bill[i].pay_date - 0))
+                            }
+                            that.setData({
+                                queryList: res.data.data
+                            })
+                            if (that.data.queryList.length != 0) {
+                                that.setData({
+                                    imgParking: true
+                                })
+                            } else {
+                                that.setData({
+                                    imgParking: false
+                                })
+                            }
                         }else{
                             that.setData({
                                 imgParking: false
@@ -104,16 +110,16 @@ Page({
     onPullDownRefresh: function () {
         var that = this;
         wx.getStorage({
-            key: 'userID',
+            key: 'mobile',
             success(res) {
                 console.log(res)
                 that.setData({
-                    userId: res.data + ""
+                    mobile: res.data + ""
                 })
                 wx.request({
                     url: http.reqUrl +'/query/Recharge',
                     data: {
-                        id: that.data.userId
+                        mobile: that.data.mobile
                     },
                     header: {
                         'content-type': 'application/x-www-form-urlencoded' // 默认值

@@ -6,6 +6,9 @@ App({
         token:'',
         oAddress :'',
     },
+    globalData:{
+        mobile:''
+    },
     onShareAppMessage: function () {
         return {
             title: '华腾智能停车',
@@ -13,6 +16,34 @@ App({
         }
     },
     onLaunch: function (){
+        const updateManager = wx.getUpdateManager()
+
+        updateManager.onCheckForUpdate(function (res) {
+            // 请求完新版本信息的回调
+            console.log(res.hasUpdate)
+        })
+
+        updateManager.onUpdateReady(function () {
+            wx.showModal({
+                title: '更新提示',
+                content: '新版本已经准备好，是否重启应用？',
+                success: function (res) {
+                    if (res.confirm) {
+                        // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                        updateManager.applyUpdate()
+                    }
+                }
+            })
+        })
+
+        updateManager.onUpdateFailed(function () {
+            // 新的版本下载失败
+            wx.showModal({
+                title: '更新提示',
+                content: '新版本下载失败',
+                showCancel: false
+            })
+        })
         var that = this;
         wx.showLoading({
             title: '登录中...'
@@ -51,7 +82,6 @@ App({
                                         'content-type': 'application/x-www-form-urlencoded'
                                     },
                                     success: function (res) {
-                                        console.log(res)
                                         if(res.data.success){
                                             wx.hideLoading();
                                             wx.setStorage({
@@ -61,17 +91,21 @@ App({
                                                 }
                                             })
                                             wx.setStorage({
-                                                key: 'userID',
-                                                data: res.data.data.userId,
-                                                complete: function () {
-                                                }
-                                            })
-                                            wx.setStorage({
                                                 key: 'session_key',
                                                 data: res.data.data.session_key,
                                                 complete: function () {
                                                 }
                                             })
+                                            wx.setStorage({
+                                                key: 'mobile',
+                                                data: res.data.data.mobile,
+                                                complete: function () {}
+                                            })
+                                            that.globalData.mobile = res.data.data.mobile
+                                            let num = res.data.data.mobile
+                                            if (that.employIdCallback) {
+                                                that.employIdCallback(num);
+                                            }
                                         }
                                         if(res.data.fail){
                                             wx.hideLoading();
@@ -116,7 +150,6 @@ App({
         })
     },
     onLoad:function(){
-    
     },
     getUserInfo: function (cb) {
         var that = this;

@@ -11,7 +11,7 @@ Page({
         currentPos: null,
         animationData: {},
         carnumber:[],      //车牌数组
-        userId:'',         //用户ID
+        mobile:'',         //用户ID
         showplate: false,  //控制新能源车牌和普通车牌输入框的显示
         carkind:'0'        //车辆类型
     },
@@ -239,15 +239,15 @@ Page({
             return;
         }else{
             wx.getStorage({
-                key: 'userID',
+                key: 'mobile',
                 success(res) {
                     that.setData({
-                        userId: res.data + ""
+                        mobile: res.data + ""
                     })
                     wx.request({
                         url: http.reqUrl +'/add/carNo',
                         data: {
-                            userId: that.data.userId,
+                            mobile: that.data.mobile,
                             carNo: that.data.plateNo,
                             carType: that.data.carkind
                         },

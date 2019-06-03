@@ -10,7 +10,7 @@ Page({
         moneyremain: 0,
         order_no: '',
         money: 0,
-        userId: '',
+        mobile: '',
         paymentType: '3',
         showPayPwdInput: false,  //是否展示密码输入层
         pwdVal: '',  //输入的密码
@@ -77,15 +77,15 @@ Page({
     payfor: function () {
         var that = this;
         wx.getStorage({
-            key: 'userID',
+            key: 'mobile',
             success: function (res) {
                 that.setData({
-                    userId: res.data
+                    mobile: res.data
                 })
                 wx.request({
                     url: http.reqUrl + '/wx/paypay',
                     data: {
-                        id: that.data.userId,
+                        id: that.data.mobile,
                         amount: that.data.money,
                         paymentType: that.data.paymentType
                     },

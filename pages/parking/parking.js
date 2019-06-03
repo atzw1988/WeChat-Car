@@ -10,7 +10,7 @@ Page({
         searchLoading: false, //"上拉加载"的变量，默认false，隐藏  
         searchLoadingComplete: false,  //“没有数据”的变量，默认false，隐藏
         pakingList: [],   //放置返回数据 
-        userId: '',    //用户ID
+        mobile: '',    //用户ID
         parkNum:0   //停车次数
     },
     onShareAppMessage: function () {
@@ -30,16 +30,16 @@ Page({
         })
         var that = this;
         wx.getStorage({
-            key: 'userID',
+            key: 'mobile',
             success(res) {
                 // console.log(res)
                 that.setData({
-                    userId: res.data + ""
+                    mobile: res.data + ""
                 })
                 wx.request({
                     url: http.reqUrl+'/query/parkOrde',
                     data: {
-                        userId: that.data.userId
+                        mobile: that.data.mobile
                     },
                     header: {
                         'content-type': 'application/x-www-form-urlencoded' // 默认值
@@ -145,7 +145,7 @@ Page({
 
     var oData = {
       pageIndex: searchPageNum,
-      id: that.data.userID,
+      id: that.data.mobile,
       sign: 1
     }
     app.func.req('/appuser/parkrecord', oData, function (res) {

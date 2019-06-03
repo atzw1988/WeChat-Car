@@ -24,12 +24,12 @@ Page({
     onShow: function () {
         var that = this;
         wx.getStorage({
-            key: 'userID',
+            key: 'mobile',
             success: function (res) {
                 wx.request({
                     url: http.reqUrl + '/query/carNo',
                     data: {
-                        userId: res.data
+                        mobile: res.data
                     },
                     header: {
                         'content-type': 'application/x-www-form-urlencoded' // 默认值

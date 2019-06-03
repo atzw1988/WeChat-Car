@@ -16,7 +16,7 @@ Page({
         moneyAll: '0.00',
         token: '',
         mobile:'',
-        userId:'',
+        mobile:'',
         hiddenmodalput: true,
         token:'',
         paymentType: '2'
@@ -34,16 +34,16 @@ Page({
         var that = this;
         // console.log(that)
         wx.getStorage({
-            key: 'userID',
+            key: 'mobile',
             success(res) {
                 // console.log(res)
                 that.setData({
-                    userId:res.data+""
+                    mobile:res.data+""
                 })
                 wx.request({
                     url: http.reqUrl+'/query/userMoney',
                     data: {
-                        id: that.data.userId
+                        mobile: that.data.mobile
                     },
                     header: {
                         'content-type': 'application/json' // 默认值
@@ -81,7 +81,7 @@ Page({
                 wx.request({
                     url: http.reqUrl +'/wx/paypay',
                     data: {
-                        id: that.data.userId,
+                        mobile: that.data.mobile,
                         amount: that.data.money,
                         paymentType: that.data.paymentType
                     },
@@ -158,7 +158,7 @@ Page({
                 wx.request({
                     url: http.reqUrl +'/wx/paypay',
                     data: {
-                        id: that.data.userId,
+                        mobile: that.data.mobile,
                         amount: that.data.money,
                         paymentType: that.data.paymentType
                     },

@@ -9,7 +9,7 @@ Page({
         moneyremain: 0,
         order_no:'',
         money: 0,
-        userId:'',
+        mobile:'',
         paymentType: '1',
         showPayPwdInput: false,  //是否展示密码输入层
         pwdVal: '',  //输入的密码
@@ -76,16 +76,16 @@ Page({
     payfor: function(){
         var that = this;
         wx.getStorage({
-            key: 'userID',
+            key: 'mobile',
             success: function(res) {
                 that.setData({
-                    userId:res.data
+                    mobile:res.data
                 })
                 console.log(res)
                 wx.request({
                     url: http.reqUrl + '/query/userMoney',
                     data: {
-                        id: res.data
+                        mobile: res.data
                     },
                     header: {
                         'content-type': 'application/json' // 默认值
@@ -99,7 +99,7 @@ Page({
                             wx.request({
                                 url: http.reqUrl + '/balance/pay',
                                 data: {
-                                    userId: that.data.userId,
+                                    mobile: that.data.mobile,
                                     userMoney: that.data.money,
                                     orderNo: that.data.order_no
                                 },
@@ -138,7 +138,7 @@ Page({
                                                 wx.request({
                                                     url: http.reqUrl + '/wx/paypay',
                                                     data: {
-                                                        id: that.data.userId,
+                                                        mobile: that.data.mobile,
                                                         amount: that.data.money,
                                                         order_no: that.data.order_no,
                                                         paymentType: that.data.paymentType

@@ -132,21 +132,9 @@ Page({
         }
     },
     lockDetail: function(e){
-        // console.log(e.currentTarget.dataset.index);
-        // console.log(e.currentTarget.dataset.data);
-        // wx.setStorage({
-        //   key: 'lockDetailList',
-        //   data: e.currentTarget.dataset.index,
-        //   success: function (res) {
-        //     wx.navigateTo({
-        //       url: "../detailList/detailList"
-        //     });
-        //   },
-        //   fail: function (res) { },
-        //   complete: function (res) { },
-        // });
         var that = this;
         let num = e.currentTarget.id;
+        console.log(this.data.searchSongList[num])
         let topark = this.data.searchSongList[num];
         wx.getLocation({
             type: 'wgs84', //返回可以用于wx.openLocation的经纬度

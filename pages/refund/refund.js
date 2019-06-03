@@ -22,10 +22,10 @@ Page({
     });
     let that = this;
     wx.getStorage({
-      key: 'userID',
+      key: 'mobile',
       success: function (res) {
         that.setData({
-          userID: res.data,
+          mobile: res.data,
           searchPageNum: 1,   //第一次加载，设置1  
           searchSongList: [],  //放置返回数据的数组,设为空  
           isFromSearch: true,  //第一次加载，设置true  
@@ -69,7 +69,7 @@ Page({
 
     var oData = {
       pageIndex: searchPageNum,
-      id: that.data.userID
+      id: that.data.mobile
     }
     app.func.req('/refund/refunds', oData, function (res) {
 

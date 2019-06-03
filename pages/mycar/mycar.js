@@ -24,12 +24,12 @@ Page({
     onShow: function(){
         var that = this;
         wx.getStorage({
-            key: 'userID',
+            key: 'mobile',
             success: function (res) {
                 wx.request({
                     url: http.reqUrl+'/query/carNo',
                     data: {
-                        userId: res.data
+                        mobile: res.data
                     },
                     header: {
                         'content-type': 'application/x-www-form-urlencoded' // 默认值
@@ -63,9 +63,9 @@ Page({
         let carno = that.data.carNumber
         let id = that.data
         wx.getStorage({
-            key: 'userID',
+            key: 'mobile',
             success: (res) => {
-                let userID = res.data
+                let mobile = res.data
                 wx.showModal({
                     title: '温馨提示',
                     content: '车辆信息删除后将不能找回，您是否确定要删除该车辆信息',
@@ -74,7 +74,7 @@ Page({
                             wx.request({
                                 url: http.reqUrl + '/delete/carNo',
                                 data: {
-                                    userId: userID,
+                                    mobile: mobile,
                                     id: carno[num].id,
                                     carNo: carno[num].car_no
                                 },

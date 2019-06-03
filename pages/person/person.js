@@ -43,15 +43,15 @@ Page({
         })
         var that = this;
         wx.getStorage({
-            key: 'userID',
+            key: 'mobile',
             success(res) {
                 that.setData({
-                    userId: res.data + ""
+                    mobile: res.data + ""
                 })
                 wx.request({
                     url: http.reqUrl +'/query/parkOrde',
                     data: {
-                        userId: that.data.userId
+                        mobile: that.data.mobile
                     },
                     header: {
                         'content-type': 'application/x-www-form-urlencoded' // 默认值

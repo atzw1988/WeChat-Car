@@ -8,7 +8,7 @@
                         <cover-image class="refresh_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="refreshtap" src="../../img/refresh_ico.png"></cover-image>
                         <cover-image class="center_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="moveToLocation" src="../../img/center_ico.png"></cover-image>
                         <cover-image class="help_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="helpTocenter" src="../../img/help_ico.png"></cover-image>
-                        <cover-image class="personal_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="personalTocenter" src="../../img/personal_ico.png"></cover-image>
+                        <cover-image class="personal_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}||{{phone_num?'hidden':'show'}}" bindtap="personalTocenter" src="../../img/personal_ico.png"></cover-image>
                         <cover-view class="parking-btn {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}||{{phone_num?'hidden':'show'}}" bindtap="stopCar" animation="{{animationData1}}">我要停车/缴费  
                         </cover-view>                            
                         <cover-view class="parking-btn {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}||{{phone_num?'show':'hidden'}}" animation="{{animationData1}}">
@@ -41,7 +41,7 @@
                     <view class="parking-list-container {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}">
                     <view class='nearpark'>附近<text>{{parknum}}</text>个停车点</view>
                     <view class='allpark' bindtap='allpark'>查看全部</view>
-                    <view class="parking-list-section center" wx:for="{{searchSongList}}" wx:key="lcokParking" data-data="{{item}}" data-index="{{item.parking_weiyi_no}}" bindtap="bindParkingListItemTap">
+                    <view class="parking-list-section center" wx:for="{{searchSongList}}" wx:key="lcokParking" data-data="{{item}}" data-index="{{item.parking_weiyi_no}}" bindtap="bindParkingListItemTap" id='{{index}}'>
                         <view class="content">
                             <view class="parking-list-item flex">
                                 <view class="parking-name">{{item.parking_name}}</view>

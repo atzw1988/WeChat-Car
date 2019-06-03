@@ -48,12 +48,12 @@ Page({
         });
         var that = this;
         wx.getStorage({         
-            key: 'userID',
+            key: 'mobile',
             success: function (res) {
                 wx.request({
                     url: http.reqUrl+'/query/carNo',
                     data: {
-                        userId: res.data
+                        mobile: res.data
                     },
                     header: {
                         'content-type': 'application/x-www-form-urlencoded' // 默认值
@@ -92,15 +92,15 @@ Page({
         var carNumber = this.data.val
         oData.parkingNo = carNumber;
         wx.getStorage({
-            key: 'userID',
+            key: 'mobile',
             success(res) {
                 that.setData({
-                    userId: res.data + ""
+                    mobile: res.data + ""
                 })
                 wx.request({
                     url: http.reqUrl + '/query/parkOrde',
                     data: {
-                        userId: that.data.userId
+                        mobile: that.data.mobile
                     },
                     header: {
                         'content-type': 'application/x-www-form-urlencoded' // 默认值
@@ -127,14 +127,14 @@ Page({
                             }
                             if (time.every(function (time) { return time.pay_type == 1 || time.charge_money == 0})) {
                                 wx.getStorage({
-                                    key: 'userID',
+                                    key: 'mobile',
                                     success: function (res) {
                                         console.log(that.data.parkNo)
                                         if (that.data.sltcarNumber && that.data.parkNo) {          //判断用户是否需选择车牌和输入车位编号
                                             wx.request({
                                                 url: http.reqUrl + '/start/parking',
                                                 data: {
-                                                    id: res.data,
+                                                    mobile: res.data,
                                                     carNo: that.data.sltcarNumber,
                                                     parkNo: that.data.parkNo
                                                 },
@@ -219,14 +219,14 @@ Page({
                             }
                         }else{
                             wx.getStorage({
-                                key: 'userID',
+                                key: 'mobile',
                                 success: function (res) {
                                     console.log(that.data.parkNo)
                                     if (that.data.sltcarNumber && that.data.parkNo) {          //判断用户是否需选择车牌和输入车位编号
                                         wx.request({
                                             url: http.reqUrl + '/start/parking',
                                             data: {
-                                                id: res.data,
+                                                mobile: res.data,
                                                 carNo: that.data.sltcarNumber,
                                                 parkNo: that.data.parkNo
                                             },
@@ -482,14 +482,14 @@ Page({
             var carNumber = this.data.val
             oData.parkingNo = carNumber;
             wx.getStorage({
-                key: 'userID',
+                key: 'mobile',
                 success: function (res) {
                     console.log(res.data)
                     console.log(that.data.sltcarNumber)
                     wx.request({
                         url: 'http://192.168.1.104:8080/start/parking',
                         data: {
-                            userId: res.data,
+                            mobile: res.data,
                             carNo: that.data.sltcarNumber,
                             parkNo: '065502'
                         },
