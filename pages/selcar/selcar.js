@@ -61,25 +61,47 @@ Page({
         var that = this
         let num = e.currentTarget.id
         let car = that.data.carNumber[num]
-        wx.setStorage({
-            key: 'card_car_no',
-            data: car.car_no,
-            complete: function(){
-                wx.getStorage({
-                    key: 'card_park_name',
+        console.log(car)
+        wx.getStorage({
+            key: 'to_sel_car',
+            success: (res) => {
+                wx.setStorage({
+                    key: 'sel_car',
+                    data: car,
                     success: () => {
-                        wx.redirectTo({
-                            url: '../cardpay/cardpay'
-                        })
-                    },
-                    fail:() => {
-                        wx.navigateTo({
-                            url: '../selpark/selpark'
+                        wx.removeStorage({
+                            key: 'to_sel_car',
+                            success: () => {
+                                wx.redirectTo({
+                                    url: '../carNumber/carNumber',
+                                })
+                            },
                         })
                     }
                 })
-                
+            },
+            fail: (res) => {
+                wx.setStorage({
+                    key: 'card_car_no',
+                    data: car.car_no,
+                    complete: function () {
+                        wx.getStorage({
+                            key: 'card_park_name',
+                            success: () => {
+                                wx.redirectTo({
+                                    url: '../cardpay/cardpay'
+                                })
+                            },
+                            fail: () => {
+                                wx.navigateTo({
+                                    url: '../selpark/selpark'
+                                })
+                            }
+                        })
+
+                    }
+                })
             }
-        });
+        })   
     }
 });

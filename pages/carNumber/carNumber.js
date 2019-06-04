@@ -14,11 +14,12 @@ Page({
         val: '',
         pay: false,
         focus: false,
-        carNumber: [],  
+        carNumber: {},  
         carkind:'',
         showimg: true,
         sltcarNumber:'',
-        parkNo:''
+        parkNo:'',
+        mycar:false
     },
     //用户分享
     onShareAppMessage: function () {
@@ -39,19 +40,41 @@ Page({
                 markerId = res.data;
                 }
             }
-        });
+        })
     },
-    //获取用户所有车牌
     onShow: function () {            
         wx.showShareMenu({
             withShareTicket: true
         });
-        var that = this;
-        wx.getStorage({         
+        this.user_car_sel()
+    },
+    changeshow: function(){
+        this.setData({
+            showimg: !this.data.showimg
+        })
+    },
+    //判断是否更换车辆
+    user_car_sel(){
+        wx.getStorage({
+            key: 'sel_car',
+            success: (res) => {
+                this.setData({
+                    carNumber:res.data,
+                    mycar:true
+                })
+            },
+            fail:(res) => {
+                this.get_user_car()
+            }
+        })
+    },
+    //获取用户最近所泊车辆
+    get_user_car(){
+        wx.getStorage({
             key: 'mobile',
-            success: function (res) {
+            success: (res) => {
                 wx.request({
-                    url: http.reqUrl+'/query/carNo',
+                    url: http.reqUrl + '/recently/carNo',
                     data: {
                         mobile: res.data
                     },
@@ -59,30 +82,29 @@ Page({
                         'content-type': 'application/x-www-form-urlencoded' // 默认值
                     },
                     method: 'GET',
-                    success: function (res) {
+                    success: (res) => {
                         console.log(res)
-                        console.log(that.data.carNumber)
-                        if(res.data.success){
-                            that.setData({
-                                carNumber: res.data.data
+                        if (res.data.code == 0) {
+                            this.setData({
+                                carNumber: res.data.data,
+                                mycar: true
                             })
-                        } 
+                        }
                     }
                 })
+            },
+        }) 
+    },
+    //更换车牌
+    sel_car(){
+        wx.setStorage({
+            key: 'to_sel_car',
+            data: true,
+            success: () => {
+                wx.navigateTo({
+                    url: '../selcar/selcar',
+                })
             }
-        })
-    },
-    changeshow: function(){
-        this.setData({
-            showimg: !this.data.showimg
-        })
-    },
-    //获取用户选择的车牌值
-    changecheck: function(res){      
-        var that = this;
-        let num = res.detail.value
-        that.setData({
-            sltcarNumber: that.data.carNumber[num].car_no
         })
     },
     //提交开车停车
@@ -95,7 +117,7 @@ Page({
             key: 'mobile',
             success(res) {
                 that.setData({
-                    mobile: res.data + ""
+                    mobile: res.data
                 })
                 wx.request({
                     url: http.reqUrl + '/query/parkOrde',
@@ -129,13 +151,12 @@ Page({
                                 wx.getStorage({
                                     key: 'mobile',
                                     success: function (res) {
-                                        console.log(that.data.parkNo)
-                                        if (that.data.sltcarNumber && that.data.parkNo) {          //判断用户是否需选择车牌和输入车位编号
+                                        if (that.data.carNumber && that.data.parkNo) {          //判断用户是否需选择车牌和输入车位编号
                                             wx.request({
                                                 url: http.reqUrl + '/start/parking',
                                                 data: {
                                                     mobile: res.data,
-                                                    carNo: that.data.sltcarNumber,
+                                                    carNo: that.data.carNumber.car_no,
                                                     parkNo: that.data.parkNo
                                                 },
                                                 header: {
@@ -143,7 +164,6 @@ Page({
                                                 },
                                                 method: 'GET',
                                                 success: function (res) {
-                                                    console.log(res)
                                                     if (res.data.code == 701) {
                                                         wx.showModal({
                                                             title: '温馨提示',
@@ -177,7 +197,7 @@ Page({
                                                     }
                                                 }
                                             })
-                                        } else if (!that.data.sltcarNumber && that.data.parkNo) {
+                                        } else if (!that.data.carNumber && that.data.parkNo) {
                                             wx.showModal({
                                                 title: '温馨提示',
                                                 content: '请选择所泊车辆',
@@ -189,7 +209,7 @@ Page({
                                                 }
                                             });
                                             return
-                                        } else if (that.data.sltcarNumber && !that.data.parkNo) {
+                                        } else if (that.data.carNumber && !that.data.parkNo) {
                                             wx.showModal({
                                                 title: '温馨提示',
                                                 content: '请输入车位编号',
@@ -204,7 +224,7 @@ Page({
                                         } else {
                                             wx.showModal({
                                                 title: '温馨提示',
-                                                content: '请选择所泊车辆和车位编号',
+                                                content: '请添加所泊车辆和车位编号',
                                                 showCancel: false,
                                                 success: function (res) {
                                                     if (res.confirm) {
@@ -222,7 +242,7 @@ Page({
                                 key: 'mobile',
                                 success: function (res) {
                                     console.log(that.data.parkNo)
-                                    if (that.data.sltcarNumber && that.data.parkNo) {          //判断用户是否需选择车牌和输入车位编号
+                                    if (that.data.carNumber && that.data.parkNo) {          //判断用户是否需选择车牌和输入车位编号
                                         wx.request({
                                             url: http.reqUrl + '/start/parking',
                                             data: {
@@ -274,10 +294,10 @@ Page({
                                                 }
                                             }
                                         })
-                                    } else if (!that.data.sltcarNumber && that.data.parkNo) {
+                                    } else if (!that.data.carNumber && that.data.parkNo) {
                                         wx.showModal({
                                             title: '温馨提示',
-                                            content: '请选择所泊车辆',
+                                            content: '请添加所泊车辆',
                                             showCancel: false,
                                             success: function (res) {
                                                 if (res.confirm) {
@@ -286,7 +306,7 @@ Page({
                                             }
                                         });
                                         return
-                                    } else if (that.data.sltcarNumber && !that.data.parkNo) {
+                                    } else if (that.data.carNumber && !that.data.parkNo) {
                                         wx.showModal({
                                             title: '温馨提示',
                                             content: '请输入车位编号',
@@ -301,7 +321,7 @@ Page({
                                     } else {
                                         wx.showModal({
                                             title: '温馨提示',
-                                            content: '请选择所泊车辆和车位编号',
+                                            content: '请添加所泊车辆和车位编号',
                                             showCancel: false,
                                             success: function (res) {
                                                 if (res.confirm) {

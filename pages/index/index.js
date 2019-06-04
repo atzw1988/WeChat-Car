@@ -68,9 +68,6 @@ Page({
                 phone_num:false,
                 mobile: app.globalData.mobile
             })
-            this.carno_bind()
-            this.uesr_nopay()
-            this.stop_car()
         } else {
             let num = app.globalData.mobile
             app.employIdCallback = num => {
@@ -93,6 +90,11 @@ Page({
     onUnload: function(){
     },  
     onShow: function(){
+        if (this.data.mobile){
+            this.carno_bind()
+            this.uesr_nopay()
+            this.stop_car()
+        }
         let that = this
         // 转发
         wx.showShareMenu({

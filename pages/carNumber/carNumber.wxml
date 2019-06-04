@@ -4,8 +4,8 @@
         <text class='line-text'>车位编号</text>
         <view class='line-two'></view>
         <!-- <image class='saomiao' src='../../img/saomiao.png' bindtap='getparking'></image> -->
-        <image class='topadd' src='../../img/tianjia.png' wx:if="{{carNumber!=null&&carNumber.length!=0}}" bindtap='addmycar'></image>
-        <text class='addtext' wx:if="{{carNumber!=null&&carNumber.length!=0}}">添加车辆</text>
+        <image class='topadd' src='../../img/tianjia.png' wx:if="{{mycar}}" bindtap='addmycar'></image>
+        <text class='addtext' wx:if="{{mycar}}">添加车辆</text>
     </view>
     <view class="pas-box">
         <view class="box-six">
@@ -32,7 +32,7 @@
             </view>
         </view>
         <view class='usertext'>最近所泊车辆：</view>
-        <radio-group class="radio-group" bindchange="changecheck" wx:if="{{carNumber!=null}}">
+        <!-- <radio-group class="radio-group" bindchange="changecheck" wx:if="{{carNumber!=null}}">
             <label class="radio" wx:for="{{carNumber}}" wx:key="{{index}}">
                 <radio id='{{index}}'value="{{index}}"/>
                 <view class='mycar'>
@@ -45,13 +45,34 @@
                     </view>
                 </view>
             </label>
-        </radio-group>
+        </radio-group> -->
+        <view class='mycar'>
+            <view class='carmingxi'>
+                <text>{{carNumber.car_no}}</text>
+            </view>
+            <text class='carkind' wx:if="{{carNumber.car_type == 0}}">普通车辆</text>
+            <text class='carkind1' wx:if="{{carNumber.car_type == 1}}">新能源车辆</text>
+            <view class='change_car' bindtap='sel_car'>
+                <image src='../../img/biangeng.png'></image>
+                <text>更换车辆</text>
+            </view>     
+        </view>
     <!-- 如果没有用户车牌记录显示添加车牌 -->
-        <view class='header clearfix' bindtap='addmycar' wx:if="{{carNumber==null||carNumber.length==0}}">
+        <view class='header clearfix' bindtap='addmycar' wx:if="{{!mycar}}">
             <image class='addcar' src='../../img/tianjia.png'></image>
             <text>添加车辆</text>
         </view>
-        <view class="confirm_btn {{len==6&&sltcarNumber ? 'on' : ''}}" bindtap='sub'>开始停车</view>
+        <view class='rule'>
+            <view class='line_header'>
+                <view class='left'></view>
+                <image src='../../img/guize.png'></image>
+                <view class='right'></view>
+            </view>
+            <view class='rule_text'>
+                <text>计费规则:每天8:00-20:00,停放时间不足30分钟(含)免费,停放时间超过30分钟不足1小时(含),按2元/车位标准收取,以后按3元/车位/小时的标准收取,不足1小时的按1小时计;8:00-20:00外免费。</text>
+            </view>
+        </view>
+        <view class="confirm_btn {{len==6&&carNumber ? 'on' : ''}}" bindtap='sub'>开始停车</view>
     </view>
     <text> \n </text>
     <text> \n </text>
