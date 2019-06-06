@@ -1,43 +1,59 @@
-<scroll-view class="table" hidden="{{imgParking}}">
-</scroll-view>
-<view hidden="{{imgParking}}">    
-    <view class='line-box'>
-        <!-- <view class='line-one'></view> -->
-        <text class='line-text'>尚未付清的停车费用</text>
-        <!-- <view class='line-two'></view> -->
-    </view>
-    <view>
-        <view class='money'>{{parkingList.charge_money}}元</view>
-        <view class='park_list clearfix'>
-            <view class='park_info1'>
-                <text class='park_title'>停车车牌</text>
-                <text class='park_cont1'>{{parkingList.car_no}}</text>    
-            </view>
-            <view class='park_info1'>
-                <text class='park_title'>停车时长</text>
-                <text class='park_cont1'>{{parkingList.buy_time}}</text>        
-            </view>
-            <view class='park_info1'>
-                <text class='park_title'>车位编码</text>
-                <text class='park_cont1'>{{parkingList.park_no}}</text>             
-            </view>
-            <view class='park_info1'>
-                <text class='park_title'>停车场名字</text>
-                <text class='park_cont1'>{{parkingList.parking_name}}</text>
-            </view>
-            <view class='park_info1'>
-                <text class='park_title'>停车开始时间</text>
-                <text class='park_cont1'>{{parkingList.parkstart_time}}</text>             
-            </view>
-            <view class='park_info1'>
-                <text class='park_title'>停车结束时间</text>
-                <text class='park_cont1'>{{parkingList.parkend_time}}</text>              
-            </view>
+<view wx:if="{{imgParking && online}}" class="up">  
+    <view class="online">
+        <view class="headertext">线上自助下单</view>
+        <view class="car_no">
+            <image class="icon" src="../../img/chepailan.png"></image>
+            <text>{{online_order.car_no}}</text>
         </view>
-        <button class='gopay' bindtap='gopay'>支付</button>
+        <view class="start_time">
+            <image class="icon" src="../../img/arrive.png"></image>
+            <text>{{online_order.parkstart_time}}</text>
+        </view>
+        <view class="end_time">
+            <image class="icon" src="../../img/leave.png"></image>
+            <text>{{online_order.parkend_time}}</text>
+        </view>
+        <view class="pay_time">
+            <image class="icon" src="../../img/time.png"></image>
+            <text>{{online_order.buy_time}}</text>
+        </view>
+        <view class="park_name">
+            <image class="icon" src="../../img/site.png"></image>
+            <text>{{online_order.parking_name}}{{online_order.park_no}}车位</text>
+        </view>
+        <view class="online_money">
+              ￥<text class="money">{{online_order.charge_money}}</text>
+        </view>
+        <view bindtap='to_pay_online' class="topay_online">缴费</view>
     </view>
 </view>
-<view class='img-box' hidden="{{!imgParking}}">
+<scroll-view class="down" wx:if="{{imgParking &&  offline}}">
+    <block wx:for="{{pda_order_list}}" wx:key="{{index}}">
+        <view class="offline" id="{{index}}">
+            <view class="headertext">线下PDA下单</view>
+            <view class="car_no">
+                <image class="icon" src="../../img/chepailan.png"></image>
+                <text>{{item.car_no}}</text>
+            </view>
+            <view class="order_no">
+                <image class="icon" src="../../img/order.png"></image>
+                <text>欠费订单数：{{item.order_no}}个</text>
+            </view>
+            <view class="detail">
+                <text bindtap='to_pdaorder' id="{{index}}">查看详情</text>
+                <image src="../../img/tubiao-.png"></image>
+            </view>
+            <view class="offline_money">
+                ￥
+                <text class="money">{{item.money}}</text>
+            </view>
+            <view class="topay_offline">缴费</view>
+        </view>
+    </block>
+      
+    
+</scroll-view>
+<view class='img-box' wx:if="{{!imgParking}}">
     <image src='../../img/Recharge-record_icon@2x.png'></image>
     <text>所有停车费用已经缴清</text>
 </view>

@@ -46,7 +46,7 @@
                 </view>
             </label>
         </radio-group> -->
-        <view class='mycar'>
+        <view class='mycar' wx:if="{{mycar}}">
             <view class='carmingxi'>
                 <text>{{carNumber.car_no}}</text>
             </view>

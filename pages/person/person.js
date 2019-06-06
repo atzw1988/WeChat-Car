@@ -125,5 +125,10 @@ Page({
         wx.navigateTo({
             url: '../mycar/mycar',
         })
+    },
+    to_service(){
+        wx.navigateTo({
+            url: '../service/service',
+        })
     }
 });

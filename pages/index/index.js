@@ -321,9 +321,8 @@ Page({
                     method: 'POST',
                     success: function (res) {
                         if (res.data.data != null) {
-                            let length = res.data.data.length
                             let time = res.data.data
-                            if (time.some(function (time) {
+                            if (time.some((time) => {
                                 return time.pay_type == 0 && time.parkend_time != undefined && time.charge_money > 0
                             })) {
                                 wx.showModal({

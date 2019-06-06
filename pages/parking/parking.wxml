@@ -2,19 +2,25 @@
     <block wx:for="{{pakingList}}" wx:key="{{index}}">
         <view class='content'>
             <view class='header'>
+                <image class="car_icon" src="../../img/chepailan.png"></image>
                 <text class="carno">{{item.car_no}}</text>
-                <text class="status">{{item.pay_type}}</text>
+                <text wx:if="{{item.pay_type == 1 &&  item.charge_money != 0}}" class="status">已支付</text>
+                <text wx:if="{{item.charge_money == 0}}" class="status">无需支付</text>
+                <text wx:if="{{item.pay_type == 0}}" style="color:#d81e06" class="status">未支付</text>
             </view>
             <view class="main">
                 <view class="up">
-                    <text class="starttime">开始时间:{{item.parkstart_time}}</text>
+                    <image class="icon" src="../../img/arrive.png"></image>
+                    <text class="starttime">{{item.parkstart_time}}</text>
                     <text class="time">{{item.buy_time}}</text>
                 </view>
                 <view class="modile">
-                    <text class="endtime">结束时间:{{item.parkend_time}}</text>
+                    <image class="icon" src="../../img/leave.png"></image>
+                    <text class="endtime">{{item.parkend_time}}</text>
                     <text class="money">{{item.charge_money}}元</text>
                 </view>
                 <view class="down">
+                    <image class="icon" src="../../img/site.png"></image>
                     <text class="parkname">{{item.parking_name}}</text>
                     <text class="parkno">车位:{{item.park_no}}</text>
                 </view>

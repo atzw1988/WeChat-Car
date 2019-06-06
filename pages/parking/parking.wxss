@@ -8,6 +8,7 @@
   margin: 20rpx auto 0;
   font-size: 30rpx;
   border-radius: 10rpx;
+  box-shadow: 2px 2px 2px #999;
 }
 
 .header {
@@ -28,7 +29,21 @@
     height: 50rpx;
     width: 95%;
     margin: 0 auto;
-    line-height: 40rpx;
+    line-height: 50rpx;
+}
+.car_icon{
+  width: 60rpx;
+  height: 60rpx;
+  float: left;
+  margin-top: 5rpx;
+  margin-right: 10rpx;
+}
+.icon{
+  width: 40rpx;
+  height: 40rpx;
+  float: left;
+  margin-right: 10rpx;
+  margin-top: 5rpx;
 }
 .up{
     margin-top: 10rpx;

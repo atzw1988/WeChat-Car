@@ -1,0 +1,63 @@
+/* pages/service/service.wxss */
+.qrcode{
+  width: 100%;
+  height: 400rpx;
+  text-align: center;
+  font-size: 30rpx;
+}
+.code{
+  width: 300rpx;
+  height: 300rpx;
+  margin: 0 auto;
+}
+.code>image{
+  width: 100%;
+  height: 100%;
+}
+.line_box{
+  width: 100%;
+  height: 1rpx;
+  border-top: 1px solid #9999;
+  position: relative;
+  margin-top: 30rpx;
+  z-index: 1000;
+}
+
+.sharp{
+  width: 0;
+  height: 0;
+  border: 10px solid #fff;
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  margin-left: -10px;
+  border-bottom: 10px solid #9999;
+  z-index: 1001;
+}
+.sharp_cont{
+  width: 0;
+  height: 0;
+  position: absolute;
+  bottom: -10px;
+  left: -9px;
+  border: 9px solid rgba(255, 255, 255, 0);
+  border-bottom: 9px solid #fff;
+  z-index: 1002;
+}
+.detail{
+  width: 100%;
+  margin-top: 20rpx;
+}
+.textone{
+  width: 90%;
+  font-size: 28rpx;
+  margin: 0 auto;
+}
+.texttwo{
+  width: 90%;
+  font-size: 30rpx;
+  margin: 20rpx auto 0;
+}
+.texttwo>text{
+  color: #d81e06;
+}

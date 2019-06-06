@@ -1,0 +1,21 @@
+<!--pages/service/service.wxml-->
+<view style="background: #fff;width:100%;height:100%">
+    <view class='qrcode'>
+        <view  class='code'>
+            <image src='../../img/code.jpg'></image>
+        </view>
+        <view>嵊停车</view>
+        <view>让世界自由停泊</view>
+    </view>
+    <view class='line_box'>
+        <view class='sharp'>
+            <view class="sharp_cont"></view>
+        </view>
+    </view>
+    <view class='detail'>
+        <view class='textone'>嵊停车专注于智能停车服务，为车主解决出行停车难题。通过精准定位，车位一目了然，精准自动计费，在线付款告别零钱烦扰，实现出行停车无忧！</view>
+        <view class='texttwo'>客服电话：
+            <text bindtap='call_phone'>0575-89306188</text>
+        </view>
+    </view>
+</view>

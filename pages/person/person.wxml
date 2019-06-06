@@ -17,7 +17,7 @@
     <image class='arrow1' src='../../img/arrow_icon@2x.png'></image>
   </view> -->
   <view class='mybill_box clearfix' bindtap='mycarList'>
-    <image class='arrow2' src='../../img/cheliang.png'></image>
+    <image class='arrow2' src='../../img/chepailan.png'></image>
     <view class='flt person-title'>车辆管理</view>
     <image class='arrow1' src='../../img/arrow_icon@2x.png'></image>
   </view>
@@ -32,6 +32,11 @@
     <view class='flt person-title' style='color:#f72c2c'>待缴车费</view>
     <image class='arrow1' src='../../img/arrow_icon@2x.png'></image>
     <view class='frt info1'>{{payfor}}元</view>
+  </view>
+  <view class='payfor_box clearfix' bindtap='to_service'>
+    <image class='arrow2' src='../../img/kefu.png'></image>
+    <view class='flt person-title'>关于我们</view>
+    <image class='arrow1' src='../../img/arrow_icon@2x.png'></image>
   </view>
   <!-- <view class='refunds_box clearfix' bindtap='refundList'>
     <view class='flt person-title'>退款记录</view>

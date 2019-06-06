@@ -57,13 +57,6 @@ Page({
                               }else{
                                 item.parkend_time = '还未结束'
                               }
-                              if (item.pay_type == 1 && item.charge_money != 0){
-                                item.pay_type = '已支付'
-                              } else if (item.charge_money == 0){
-                                item.pay_type = '无需支付'
-                              }else{
-                                item.pay_type = "未支付"
-                              }
                               if (item.buy_time < 60 ){
                                 item.buy_time = item.buy_time + '分钟'
                               } else if (item.buy_time == 60){

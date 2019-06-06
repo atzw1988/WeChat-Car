@@ -47,6 +47,7 @@ Page({
             withShareTicket: true
         });
         this.user_car_sel()
+        this.get_car_list()
     },
     changeshow: function(){
         this.setData({
@@ -87,13 +88,42 @@ Page({
                         if (res.data.code == 0) {
                             this.setData({
                                 carNumber: res.data.data,
-                                mycar: true
                             })
                         }
                     }
                 })
             },
         }) 
+    },
+    //获取用户车辆列表
+    get_car_list(){
+        wx.getStorage({
+            key: 'mobile',
+            success: (res) => {
+                wx.request({
+                    url: http.reqUrl + '/query/carNo',
+                    data: {
+                        mobile: res.data
+                    },
+                    header: {
+                        'content-type': 'application/x-www-form-urlencoded' // 默认值
+                    },
+                    method: 'GET',
+                    success: (res) => {
+                        console.log(res)
+                        if (res.data.success) {
+                            this.setData({
+                                mycar: true
+                            })
+                        }else{
+                            this.setData({
+                                mycar: false
+                            })
+                        }
+                    }
+                })
+            },
+        })
     },
     //更换车牌
     sel_car(){
@@ -151,6 +181,7 @@ Page({
                                 wx.getStorage({
                                     key: 'mobile',
                                     success: function (res) {
+                                        console.log(that.data.carNumber)
                                         if (that.data.carNumber && that.data.parkNo) {          //判断用户是否需选择车牌和输入车位编号
                                             wx.request({
                                                 url: http.reqUrl + '/start/parking',
