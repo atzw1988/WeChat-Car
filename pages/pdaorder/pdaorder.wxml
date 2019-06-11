@@ -4,29 +4,29 @@
     <view class="offline">
       <view class="park_name">
         <image class="icon" src="../../img/site.png"></image>
-        <text>{{item.site}}</text>
+        <text>{{item.zonename}}--{{item.parkingspace}}</text>
       </view>
       <view class="start_time">
         <image class="icon" src="../../img/arrive.png"></image>
-        <text>{{item.start_time}}</text>
+        <text>{{item.starttime}}</text>
       </view>
       <view class="end_time">
         <image class="icon" src="../../img/leave.png"></image>
-        <text>{{item.end_time}}</text>
+        <text>{{item.endtime}}</text>
       </view>
       <view class="pay_time">
         <image class="icon" src="../../img/time.png"></image>
-        <text>{{item.pay_time}}</text>
+        <text>{{item.sumMins}}</text>
       </view>
       <view class="status">未缴费</view>
       <view class="offline_money">
         ￥
-        <text class="money">5.00</text>
+        <text class="money">{{item.shouldmoney}}</text>
       </view>
     </view>
   </block>
   <view class="total">
-    <view class="total_money">￥<text>1095.00</text></view>
-    <button class="pad_pay">缴费</button>
+    <view class="total_money">总计金额：￥<text>{{total_money}}</text></view>
+    <button class="pad_pay" bindtap="to_pay">缴费</button>
   </view>
 </scroll-view>

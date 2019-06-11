@@ -1,6 +1,6 @@
 <view wx:if="{{imgParking && online}}" class="up">  
     <view class="online">
-        <view class="headertext">线上自助下单</view>
+        <view class="headertext textone">小程序/APP订单</view>
         <view class="car_no">
             <image class="icon" src="../../img/chepailan.png"></image>
             <text>{{online_order.car_no}}</text>
@@ -19,7 +19,7 @@
         </view>
         <view class="park_name">
             <image class="icon" src="../../img/site.png"></image>
-            <text>{{online_order.parking_name}}{{online_order.park_no}}车位</text>
+            <text>{{online_order.parking_name}}--{{online_order.park_no}}</text>
         </view>
         <view class="online_money">
               ￥<text class="money">{{online_order.charge_money}}</text>
@@ -30,14 +30,14 @@
 <scroll-view class="down" wx:if="{{imgParking &&  offline}}">
     <block wx:for="{{pda_order_list}}" wx:key="{{index}}">
         <view class="offline" id="{{index}}">
-            <view class="headertext">线下PDA下单</view>
+            <view class="headertext texttwo">现场收费订单</view>
             <view class="car_no">
                 <image class="icon" src="../../img/chepailan.png"></image>
-                <text>{{item.car_no}}</text>
+                <text>{{item.carnumber}}</text>
             </view>
             <view class="order_no">
                 <image class="icon" src="../../img/order.png"></image>
-                <text>欠费订单数：{{item.order_no}}个</text>
+                <text>欠费订单数：{{item.oweCount}}个</text>
             </view>
             <view class="detail">
                 <text bindtap='to_pdaorder' id="{{index}}">查看详情</text>
@@ -45,9 +45,9 @@
             </view>
             <view class="offline_money">
                 ￥
-                <text class="money">{{item.money}}</text>
+                <text class="money">{{item.oweAmount * -1}}</text>
             </view>
-            <view class="topay_offline">缴费</view>
+            <view bindtap="to_pay_offline" class="topay_offline" id="{{index}}">缴费</view>
         </view>
     </block>
       

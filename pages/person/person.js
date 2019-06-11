@@ -41,52 +41,40 @@ Page({
         wx.showLoading({
             title: '加载中',
         })
-        var that = this;
+        this.get_order_num()
+    },
+    //获取用户停车次数
+    get_order_num(){
         wx.getStorage({
             key: 'mobile',
-            success(res) {
-                that.setData({
-                    mobile: res.data + ""
+            success: (res) => {
+                this.setData({
+                    mobile: res.data
                 })
                 wx.request({
-                    url: http.reqUrl +'/query/parkOrde',
+                    url: http.reqUrl + '/carNo/order',
                     data: {
-                        mobile: that.data.mobile
+                        mobile: this.data.mobile,
+                        pageIndex: 1,
+                        ps: 10,
+                        status: '2',
                     },
                     header: {
                         'content-type': 'application/x-www-form-urlencoded' // 默认值
                     },
                     method: 'POST',
-                    success: function (res) {
-                        if(res.data.data!=null){
-                            that.setData({
-                                pakingList: res.data.data
+                    success: (res) => {
+                        console.log(res)
+                        if (res.data.code == 0) {
+                            this.setData({
+                                parkNum: res.data.data.tr
                             })
-                            if (that.data.pakingList) {
-                                that.setData({
-                                    parkNum: res.data.data.length
-                                })
-                            }
-                            let arr = res.data.data.filter(item => {
-                                return item.pay_type == 0
-                            })
-                            if(arr.length == 1){
-                                that.setData({
-                                    payfor: arr[0].charge_money
-                                })
-                            }else{
-                                that.setData({
-                                    payfor: 0
-                                })
-                            }
-                            wx.hideLoading();
                         }else{
-                            that.setData({
-                              parkNum: 0,
-                              payfor:0
+                            this.setData({
+                                parkNum: 0
                             })
-                            wx.hideLoading();
                         }
+                        wx.hideLoading()
                     }
                 })
             }

@@ -224,6 +224,11 @@ Page({
                                                     if (res.data.success) {
                                                         wx.navigateTo({     //跳转主页面并刷新
                                                             url: '../index/index',
+                                                            success: function (e) {
+                                                                var page = getCurrentPages().pop();
+                                                                if (page == undefined || page == null) return;
+                                                                page.onShow();
+                                                            }
                                                         })
                                                     }
                                                 }

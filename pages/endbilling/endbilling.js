@@ -70,7 +70,12 @@ Page({
     },
     returnOut: function(){
         wx.reLaunch({
-        url: '../index/index'
+            url: '../index/index',
+            success: function (e) {
+                var page = getCurrentPages().pop();
+                if (page == undefined || page == null) return;
+                page.onShow();
+            }
         })
     },
     payfor: function(){

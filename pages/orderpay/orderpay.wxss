@@ -1,0 +1,124 @@
+/* pages/orderpay/orderpay.wxss */
+.row {
+  width: 100%;
+  height: 100%;
+}
+.header{
+  width: 100%;
+  padding-top: 20rpx
+}
+.content{
+  width: 90%;
+  /* height: 600rpx; */
+  border-radius: 10rpx;
+  box-shadow: 2px 2px 2px #999;
+  padding: 0 20rpx;
+  margin: 0 auto;
+  background: #fff;
+}
+.mycar{
+  width: 100%;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 35rpx;
+  font-weight: 600;
+  border-bottom: 1rpx solid #9999;
+}
+.park_name,
+.buy_time,
+.money,
+.start_time,
+.rule,
+.status{
+  width: 100%;
+  height: 50rpx;
+  font-size: 30rpx;
+  line-height: 50rpx;
+  color: rgb(75, 75, 75);
+}
+.rule_detail{
+  font-size: 25rpx;
+  line-height: 30rpx;
+  color: rgb(75, 75, 75);
+}
+.left{
+  height: 100%;
+  float: left;
+}
+.right{
+  height: 100%;
+  float: right;
+}
+.show_detail{
+  width: 100%;
+  height: 60rpx;
+  font-size: 30rpx;
+  line-height: 60rpx;
+  border-top: 1rpx solid #9999;
+}
+.pay_kind{
+  width: 95%;
+  height: 300rpx;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 15rpx;
+  box-shadow: 2px 2px 2px #999;
+}
+.header_text {
+  margin-top: 20rpx;
+  background: #fff;
+  padding-left: 30rpx;
+  height: 40rpx;
+  font-size: 35rpx;
+  line-height: 60rpx;
+  padding-top: 10rpx;
+}
+.mymoney {
+  padding-top: 40rpx;
+}
+.mymoney,
+.wxpay {
+  height: 100rpx;
+  width: 100%;
+}
+.mymoney>text,
+.wxpay>text {
+  float: left;
+  line-height: 100rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.money_icon,
+.wx_icon {
+  width: 75rpx;
+  height: 75rpx;
+  float: left;
+  margin-top: 10rpx;
+  margin-left: 35rpx;
+}
+.check_img {
+  float: right;
+  height: 60rpx;
+  width: 60rpx;
+  margin-top: 20rpx;
+  margin-right: 60rpx;
+  border: 1px solid #999;
+  border-radius: 50%;
+}
+.check_img>image {
+  width: 60rpx;
+  height: 60rpx;
+}
+.checked {
+  border: 1px solid #00af32;
+}
+.btn {
+  width: 80%;
+  height: 80rpx;
+  font-size: 40rpx;
+  line-height: 80rpx;
+  font-weight: 600;
+  margin-top: 60rpx;
+  background: #1296db;
+  color: #fff;
+}

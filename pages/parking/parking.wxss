@@ -1,7 +1,73 @@
-.table {
-  border: 0px solid darkgray;
+.row{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
-
+.table {
+  margin-top: 160rpx;
+  z-index: 1000;
+  height: 1050rpx;
+}
+.header_sel{
+  width: 100%;
+  height: 160rpx;
+  position: absolute;
+  top: 0;
+  z-index: 1001;
+  box-shadow: 2px 2px 2px #999;
+}
+.sel_car{
+  width: 100%;
+  height: 80rpx;
+  font-size: 30rpx;
+  color: #fff;
+  background: #5cbcfe;
+}
+.my_sel{
+  width: 180rpx;
+  height: 60rpx;
+  line-height: 40rpx;
+  text-align: center;
+  margin: 0 auto;
+  padding-top: 20rpx;
+}
+.picker{
+  float: left;
+}
+.car{
+  width: 40rpx;
+  height: 40rpx;
+  float: right;
+}
+/* 账单类型选择 */
+.order_kind{
+  width: 100%;
+  height: 80rpx;
+  color: #000;
+  background: #fff;
+}
+.all{
+  width: 33.3%;
+  height: 60rpx;
+  margin: 10rpx auto 0;
+  float: left;
+}
+.active{
+  color: #5cbcfe;
+  border-bottom: 10rpx solid #5cbcfe;
+}
+.text{
+  width: 100%;
+  height: 40rpx;
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  line-height: 40rpx;
+  text-align: center;
+}
+._text{
+  border-right: 2rpx solid #9999;
+}
+/* 停车记录 */
 .content {
   width: 95%;
   background: #fff;
@@ -9,27 +75,23 @@
   font-size: 30rpx;
   border-radius: 10rpx;
   box-shadow: 2px 2px 2px #999;
+  position: relative;
+  padding-top: 10rpx;
 }
-
-.header {
-  height: 70rpx;
-  font-size: 35rpx;
-  width: 95%;
-  margin: 0 auto;
-  line-height: 70rpx;
-  border-bottom: 1px solid #999;
-}
-
 .carno{
     color: #5cbcfe;
 }
+.park_name,
 .up,
 .modile,
 .down{
-    height: 50rpx;
-    width: 95%;
-    margin: 0 auto;
-    line-height: 50rpx;
+  height: 60rpx;
+  width: 95%;
+  margin: 0 auto;
+  line-height: 60rpx;
+}
+.down{
+  border-top: 1rpx solid #999;
 }
 .car_icon{
   width: 60rpx;
@@ -43,26 +105,35 @@
   height: 40rpx;
   float: left;
   margin-right: 10rpx;
-  margin-top: 5rpx;
+  margin-top: 10rpx;
 }
-.up{
-    margin-top: 10rpx;
-}
-.down{
-    margin-bottom: 10rpx;
-}
-.time,
-.money,
-.parkno,
-.status{
-    float: right;
+.more{
+  width: 40rpx;
+  height: 40rpx;
+  float: right;
+  margin-right: 30rpx;
+  margin-top: 10rpx;
 }
 .status{
-    font-size: 30rpx;
+  font-size: 35rpx;
+  position: absolute;
+  top: 50rpx;
+  right: 40rpx;
 }
 .money{
-    font-size: 35rpx;
-    color: #d81e06;
+  font-size: 40rpx;
+  color: #d81e06;
+  position: absolute;
+  top: 110rpx;
+  right: 40rpx;
+}
+.loading {
+  font-size: 14px;
+  padding: 15px;
+  text-align: center;
+}
+.loading.complete:before {
+  display: none;
 }
 .img-box{
   margin-top: 50px;
@@ -80,4 +151,9 @@
 
 .img-box > text {
   margin-top: 10px;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
 }

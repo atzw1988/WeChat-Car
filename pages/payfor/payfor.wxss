@@ -69,7 +69,6 @@
 }
 .headertext{
   height: 70rpx;
-  width: 200rpx;
   margin-top: 20rpx;
   margin-bottom: 20rpx;
   border-top-right-radius: 35rpx;
@@ -77,6 +76,12 @@
   background: #fcd0f8;
   line-height: 70rpx;
   color: #d81e06;
+}
+.textone{
+  width: 240rpx;
+}
+.texttwo{
+  width: 200rpx;
 }
 /* 线下订单 */
 .offline{

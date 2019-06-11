@@ -54,46 +54,44 @@ Page({
         choose:false,
         showModalStatus:false,
         get_user_phone:false,
-        phone_num:true   //判断用户是否绑定手机
+        phone_num:true,   //判断用户是否绑定手机
+        nopay:false,
+        car:''
     },
     //加载腾讯地图
     onReady: function (e) {
         this.mapCtx = wx.createMapContext('map')
     },
-    onLoad: function(){
-        var that = this;
-        console.log(app.globalData.mobile)
+    onLoad: function(){   
+    },
+    onUnload: function(){
+    },  
+    onShow: function(){
         if (app.globalData.mobile != null) {
             this.setData({
-                phone_num:false,
+                phone_num: false,
                 mobile: app.globalData.mobile
             })
+            this.carno_bind()
+            this.uesr_nopay()
+            this.stop_car()
         } else {
             let num = app.globalData.mobile
             app.employIdCallback = num => {
-                if(num == null){
+                if (num == null) {
                     this.setData({
                         phone_num: true
                     })
-                }else{
+                } else {
                     this.setData({
                         phone_num: false,
-                        mobile:num,    
+                        mobile: num,
                     })
                     this.carno_bind()
                     this.uesr_nopay()
                     this.stop_car()
                 }
             }
-        } 
-    },
-    onUnload: function(){
-    },  
-    onShow: function(){
-        if (this.data.mobile){
-            this.carno_bind()
-            this.uesr_nopay()
-            this.stop_car()
         }
         let that = this
         // 转发
@@ -306,42 +304,67 @@ Page({
         let that = this
         wx.getStorage({
             key: 'mobile',
-            success(res) {
+            success:(res) => {
                 that.setData({
-                    mobile: that.data.mobile
+                    mobile: res.data
                 })
                 wx.request({
-                    url: http.reqUrl + '/query/parkOrde',
+                    url: http.reqUrl + '/carNo/order',
                     data: {
-                        mobile: that.data.mobile
+                        mobile: that.data.mobile,
+                        pageIndex: 1,
+                        ps: 10,
+                        status: '0',
                     },
                     header: {
                         'content-type': 'application/x-www-form-urlencoded' // 默认值
                     },
                     method: 'POST',
-                    success: function (res) {
-                        if (res.data.data != null) {
-                            let time = res.data.data
-                            if (time.some((time) => {
-                                return time.pay_type == 0 && time.parkend_time != undefined && time.charge_money > 0
-                            })) {
-                                wx.showModal({
-                                    title: '温馨提示',
-                                    content: '您还有未付清的停车费用，需要付清后才能再次停车',
-                                    success(res) {
-                                        if (res.confirm) {
-                                            wx.navigateTo({
-                                                url: '../payfor/payfor',
-                                            })
-                                        } else if (res.cancel) {
-                                            return;
+                    success: (res) => {
+                        if(res.data.code == 0){
+                            let car = res.data.data.data.map(item => {
+                                return item.car_no
+                            }).join(',')
+                            this.setData({
+                                nopay: true,
+                                car:car
+                            })
+                            wx.setStorage({
+                                key: 'nopay_car',
+                                data: res.data.data.data[0].car_no,
+                                success: () => {
+                                    wx.showModal({
+                                        title: '温馨提示',
+                                        content: '您车牌:' + car + '下还有未付清的停车费用，需要付清后才能再次停车',
+                                        success(res) {
+                                            if (res.confirm) {
+                                                wx.setStorage({
+                                                    key: 'index_to_pay',
+                                                    data: true,
+                                                    success: () => {
+                                                        wx.navigateTo({
+                                                            url: '../parking/parking',
+                                                        })
+                                                    },
+                                                    fail: () => {},
+                                                    complete: () => {}
+                                                })
+                                            } else if (res.cancel) {
+                                                return;
+                                            }
                                         }
-                                    }
-                                })
-                            }
+                                    })
+                                },
+                                fail: () => {},
+                                complete: () => {}
+                            })                           
+                        }else{
+                            this.setData({
+                                nopay:false
+                            })
                         }
                     }
-                })
+                })    
             }
         })
     },
@@ -607,62 +630,88 @@ Page({
     },
     // 我要停车
     parkone: function(){
-        let that = this;
-        wx.getStorage({
-            key: 'mobile',
-            success(res) {
-                that.setData({
-                    mobile: res.data
-                })
-                wx.request({
-                    url: http.reqUrl + '/query/parkOrde',
-                    data: {
-                        mobile: that.data.mobile
-                    },
-                    header: {
-                        'content-type': 'application/x-www-form-urlencoded' // 默认值
-                    },
-                    method: 'POST',
-                    success: function (res) {
-                        if(res.data.success){
-                            if (res.data.data != null) {
-                                let length = res.data.data.length
-                                let time = res.data.data
-                                if (time.some(function (time) { return time.pay_type == 0 && time.parkend_time != undefined && time.charge_money > 0 })) {
-                                    wx.showModal({
-                                        title: '温馨提示',
-                                        content: '您还有未付清的停车费用，需要付清后才能再次停车',
-                                        success(res) {
-                                            if (res.confirm) {
-                                                wx.navigateTo({
-                                                    url: '../payfor/payfor',
-                                                })
-                                            } else if (res.cancel) {
-                                                return;
-                                            }
-                                        }
-                                    })
-                                }
-                                if (time.every(function (time) { return time.pay_type == 1 || time.charge_money == 0 })) {
-                                    wx.navigateTo({
-                                        url: '../carNumber/carNumber',
-                                    })
-                                }
-                            } else {
+        if(this.data.nopay){
+            wx.showModal({
+                title: '温馨提示',
+                content: '您车牌:' + this.data.car + '下还有未付清的停车费用，需要付清后才能再次停车',
+                success(res) {
+                    if (res.confirm) {
+                        wx.setStorage({
+                            key: 'index_to_pay',
+                            data: true,
+                            success: () => {
                                 wx.navigateTo({
-                                    url: '../carNumber/carNumber',
+                                    url: '../parking/parking',
                                 })
-                            }  
-                        }
-                        if(res.data.fail){
-                            wx.navigateTo({
-                                url: '../carNumber/carNumber',
-                            })
-                        }                         
+                            },
+                            fail: () => {},
+                            complete: () => {}
+                        })
+                    } else if (res.cancel) {
+                        return;
                     }
-                })
-            }
-        })   
+                }
+            })
+        }else{
+             wx.navigateTo({
+                 url: '../carNumber/carNumber',
+             })
+        }
+        // wx.getStorage({
+        //     key: 'mobile',
+        //     success(res) {
+        //         that.setData({
+        //             mobile: res.data
+        //         })
+        //         wx.request({
+        //             url: http.reqUrl + '/query/parkOrde',
+        //             data: {
+        //                 mobile: that.data.mobile
+        //             },
+        //             header: {
+        //                 'content-type': 'application/x-www-form-urlencoded' // 默认值
+        //             },
+        //             method: 'POST',
+        //             success: function (res) {
+        //                 if(res.data.success){
+        //                     if (res.data.data != null) {
+        //                         let length = res.data.data.length
+        //                         let time = res.data.data
+        //                         if (time.some(function (time) { return time.pay_type == 0 && time.parkend_time != undefined && time.charge_money > 0 })) {
+        //                             wx.showModal({
+        //                                 title: '温馨提示',
+        //                                 content: '您还有未付清的停车费用，需要付清后才能再次停车',
+        //                                 success(res) {
+        //                                     if (res.confirm) {
+        //                                         wx.navigateTo({
+        //                                             url: '../payfor/payfor',
+        //                                         })
+        //                                     } else if (res.cancel) {
+        //                                         return;
+        //                                     }
+        //                                 }
+        //                             })
+        //                         }
+        //                         if (time.every(function (time) { return time.pay_type == 1 || time.charge_money == 0 })) {
+        //                             wx.navigateTo({
+        //                                 url: '../carNumber/carNumber',
+        //                             })
+        //                         }
+        //                     } else {
+        //                         wx.navigateTo({
+        //                             url: '../carNumber/carNumber',
+        //                         })
+        //                     }  
+        //                 }
+        //                 if(res.data.fail){
+        //                     wx.navigateTo({
+        //                         url: '../carNumber/carNumber',
+        //                     })
+        //                 }                         
+        //             }
+        //         })
+        //     }
+        // })   
     },
     parktwo: function(){
         wx.navigateTo({

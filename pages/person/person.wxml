@@ -25,14 +25,14 @@
     <image class='arrow2' src='../../img/jilu.png'></image>
     <view class='flt person-title'>停车记录</view>
     <image class='arrow1' src='../../img/arrow_icon@2x.png'></image>
-    <view class='frt info'>{{parkNum}}次</view>
+    <!-- <view class='frt info'>{{parkNum}}次</view> -->
   </view>
-  <view class='payfor_box clearfix' bindtap='payforList'>
+  <!-- <view class='payfor_box clearfix' bindtap='payforList'>
     <image class='arrow2' src='../../img/weijiao.png'></image>
     <view class='flt person-title' style='color:#f72c2c'>待缴车费</view>
     <image class='arrow1' src='../../img/arrow_icon@2x.png'></image>
     <view class='frt info1'>{{payfor}}元</view>
-  </view>
+  </view> -->
   <view class='payfor_box clearfix' bindtap='to_service'>
     <image class='arrow2' src='../../img/kefu.png'></image>
     <view class='flt person-title'>关于我们</view>

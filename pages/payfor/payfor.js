@@ -15,21 +15,10 @@ Page({
         parkingList:{},
         paymentType:'1', 
         online_order: {},
-        pda_order_list:[
-            {car_no:'粤B88888',money:1095.00,order_no:60},
-            {
-                car_no: '粤B66666',
-                money: 1095.00,
-                order_no: 60
-            },
-            {
-                car_no: '粤B99999',
-                money: 1095.00,
-                order_no: 60
-            }
-        ],
+        pda_order_list:[],
         online: false,
-        offline:false
+        offline: false,
+        mobile:''
     },
     onShareAppMessage: function () {
         return {
@@ -60,11 +49,15 @@ Page({
     },
     onShow: function () {
         this.get_no_pay()
-        if (!this.data.online && !this.data.offline){
+        this.get_pda_no_pay()
+        
+    },
+    //判断是否显示无订单图片
+    show_imgParking(){
+        if (!this.data.online && !this.data.offline) {
             this.setData({
-                imgParking:false
+                imgParking: false
             })
-            console.log(this.data.imgParking)
         }
     },
     //查询是否有待缴车费
@@ -112,7 +105,44 @@ Page({
             }
         })
     },
-    //待缴车费页面支付车费
+    //查询PDA是否有欠费
+    get_pda_no_pay(){
+        wx.getStorage({
+            key: 'mobile',
+            success: (res) => {
+                this.setData({
+                    mobile: res.data
+                })
+                wx.request({
+                    url: http.reqUrl + '/lack/statistical',
+                    data: {
+                        mobile: res.data
+                    },
+                    header: {
+                        'content-type': 'application/x-www-form-urlencoded' // 默认值
+                    },
+                    method: 'POST',
+                    success: (res) => {
+                        console.log(res)
+                        if(res.data.code == 0){
+                            this.setData({
+                                pda_order_list:res.data.data,
+                                offline: true
+                            })
+                        }else{
+                            this.setData({
+                                offline: false
+                            })
+                        }
+                        this.show_imgParking()
+                    }
+                })
+            },
+            fail: () => {},
+            complete: () => {}
+        })     
+    },
+    //待缴车费页面支付线上车费
     to_pay_online() {
         var that = this
         wx.getStorage({
@@ -242,20 +272,156 @@ Page({
             }
         })
     },
-    to_pdaorder(e){
-        let car_no = this.data.pda_order_list[e.currentTarget.id].car_no
-        console.log(car_no)
-        wx.setStorage({
-            key:'car_no',
-            data: car_no,
-            success:() => {
-                wx.navigateTo({
-                    url:'../pdaorder/pdaorder'
+    //待缴车费页面支付线下车费
+    to_pay_offline(e){
+        let order = this.data.pda_order_list[e.currentTarget.id]
+        let that = this
+        wx.getStorage({
+            key: 'mobile',
+            success: function (res) {
+                that.setData({
+                    mobile: res.data
+                })
+                wx.request({
+                    url: http.reqUrl + '/query/userMoney',
+                    data: {
+                        mobile: res.data
+                    },
+                    header: {
+                        'content-type': 'application/json' // 默认值
+                    },
+                    method: 'GET',
+                    success: function (res) {
+                        let mymoney = res.data.data
+                        if (mymoney >= order.oweAmount * -1) {
+                            wx.request({
+                                url: http.reqUrl + '/balance/pay',
+                                data: {
+                                    mobile: that.data.mobile,
+                                    userMoney: order.oweAmount * -1,
+                                    orderNo: order.id
+                                },
+                                header: {
+                                    'content-type': 'application/x-www-form-urlencoded', // 默认值
+                                },
+                                method: 'GET',
+                                success: function (res) {
+                                    if (res.data.success) {
+                                        wx.showToast({
+                                            title: '余额支付成功',
+                                            image: '../../img/chenggong.png',
+                                            duration: 2000,
+                                            success: function () {
+                                                // that.setData({
+                                                //     offline: false
+                                                // })
+                                                that.onShow()
+                                            }
+                                        })
+                                    } else {
+                                        wx.showToast({
+                                            title: '支付失败',
+                                            image: '../../img/shibai.png'
+                                        })
+                                    }
+                                }
+                            })
+                        }
+                        if (mymoney < order.oweAmount * -1) {
+                            wx.showModal({
+                                title: '温馨提示',
+                                content: '您的余额不足，可以选择微信支付',
+                                success(res) {
+                                    if (res.confirm) {
+                                        wx.getStorage({
+                                            key: 'token',
+                                            success: function (res) {
+                                                wx.request({
+                                                    url: http.reqUrl + '/wx/paypay',
+                                                    data: {
+                                                        mobile: that.data.mobile,
+                                                        order_no: order.id,
+                                                        amount: order.oweAmount * -1,
+                                                        paymentType: that.data.paymentType
+                                                    },
+                                                    header: {
+                                                        'content-type': 'application/x-www-form-urlencoded', // 默认值
+                                                        'token': res.data
+                                                    },
+                                                    method: 'POST',
+                                                    success: function (res) {
+                                                        wx.requestPayment({
+                                                            timeStamp: res.data.data.timeStamp,
+                                                            nonceStr: res.data.data.nonceStr,
+                                                            package: res.data.data.package,
+                                                            signType: res.data.data.signType,
+                                                            paySign: res.data.data.paySign,
+                                                            success: function (res) {
+                                                                wx.showToast({
+                                                                    title: '支付成功',
+                                                                    image: '../../img/chenggong.png'
+                                                                })
+                                                                // that.onShow()
+                                                                wx.navigateTo({
+                                                                    url: '../person/person',
+                                                                    success: function (e) {
+                                                                        var page = getCurrentPages().pop();
+                                                                        if (page == undefined || page == null) return;
+                                                                        page.onShow();
+                                                                    }
+                                                                })
+                                                            },
+                                                            fail: function (res) {
+                                                                wx.showToast({
+                                                                    title: '支付失败',
+                                                                    image: '../../img/shibai.png'
+                                                                })
+                                                            },
+                                                            complete: function (res) {
+
+                                                            }
+                                                        })
+                                                    }
+                                                })
+                                            },
+                                        })
+                                    } else if (res.cancel) {
+                                        wx.navigateTo({
+                                            url: '../payfor/payfor',
+                                            success: function (e) {
+                                                var page = getCurrentPages().pop();
+                                                if (page == undefined || page == null) return;
+                                                page.onShow();
+                                            }
+                                        })
+                                    }
+                                }
+                            })
+                        }
+                    }
                 })
             }
         })
     },
-    dosomething(){
-        console.log('1')
+    to_pdaorder(e){
+        let car_no = this.data.pda_order_list[e.currentTarget.id].carnumber
+        let order_no = this.data.pda_order_list[e.currentTarget.id].id
+        wx.setStorage({
+            key: 'order_no',
+            data: order_no,
+            success: (result) => {
+                wx.setStorage({
+                    key: 'car_no',
+                    data: car_no,
+                    success: () => {
+                        wx.navigateTo({
+                            url: '../pdaorder/pdaorder'
+                        })
+                    }
+                })
+            },
+            fail: () => {},
+            complete: () => {}
+        })
     }
 })

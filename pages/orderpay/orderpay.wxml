@@ -1,0 +1,63 @@
+<!--pages/orderpay/orderpay.wxml-->
+<view class="row">
+  <view class="header">
+    <view class="content">
+      <view class="mycar">{{sel_order.car_no}}</view>
+      <view class="detail">
+        <view class="park_name">
+          <view class="left">停车位置:</view>
+          <view class="right">{{sel_order.parking_name}}**--{{sel_order.park_no}}**</view>
+        </view>
+        <view class="buy_time">
+          <view class="left">停车时长:</view>
+          <view class="right">{{sel_order.buy_time}}</view>
+        </view>
+        <view class="money">
+          <view class="left">停车费用:</view>
+          <view style="color:#d81e06" class="right">{{sel_order.charge_money}}元</view>
+        </view>
+        <view class="start_time" wx:if="{{show_detail}}">
+          <view class="left">驶入时间:</view>
+          <view class="right">{{sel_order.parkstart_time}}</view>
+        </view>
+        <view class="rule"  wx:if="{{show_detail}}">
+          <view class="left">停车费率:</view>
+        </view>
+        <view class="rule_detail"  wx:if="{{show_detail}}">
+          <view>
+            <text>白天费率：每天8:00-20:00,停放时间不足30分钟(含)免费,停放时间超过30分钟不足1小时(含),按2元/车位标准收取,以后按3元/车位/小时的标准收取,不足1小时的按1小时计。</text>
+          </view>
+          <view>
+            <text>夜间费率：免费(收费标准会不定期调整,如有疑义,请咨询当地收费机构)</text>
+          </view>  
+        </view>
+        <view class="status"  wx:if="{{show_detail}}">
+          <view class="left">订单状态:</view>
+          <view style="color:#d81e06" class="right">未缴纳</view>
+        </view>
+        <view class="show_detail">
+          <view   wx:if="{{show_detail}}" class="right" bindtap='detail_show'>收起详情</view>
+          <view   wx:if="{{!show_detail}}" class="right" bindtap='detail_show'>查看详情</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="pay_kind">
+    <view class="header_text">请选择支付方式</view>
+    <view class="mymoney" bindtap='use_money'>
+      <image class="money_icon" src="../../img/balance.png"></image>
+      <text>余额支付</text>
+      <view class="check_img {{!pay_checked? 'checked':''}}">
+        <image wx:if="{{!pay_checked}}" src="../../img/payxuanze.png"></image>
+      </view>
+    </view>
+    <view class="wxpay" bindtap='use_wx'>
+      <image class="wx_icon" src="../../img/weixinzhifu.png"></image>
+      <text>微信支付</text>
+      <view class="check_img {{pay_checked? 'checked':''}}">
+        <image wx:if="{{pay_checked}}" src="../../img/payxuanze.png"></image>
+      </view>
+    </view>
+  </view>
+  <button class="btn" bindtap='gopay'>确认支付</button>
+</view>

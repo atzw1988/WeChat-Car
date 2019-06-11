@@ -23,7 +23,8 @@
         "pages/selpark/selpark",
         "pages/cardpay/cardpay",
         "pages/service/service",
-        "pages/pdaorder/pdaorder"
+        "pages/pdaorder/pdaorder",
+        "pages/orderpay/orderpay"
     ],
     "window": {
         "backgroundTextStyle": "light",

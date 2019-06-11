@@ -1,34 +1,65 @@
-<scroll-view class="table" hidden="{{imgParking}}">
-    <block wx:for="{{pakingList}}" wx:key="{{index}}">
-        <view class='content'>
-            <view class='header'>
-                <image class="car_icon" src="../../img/chepailan.png"></image>
-                <text class="carno">{{item.car_no}}</text>
-                <text wx:if="{{item.pay_type == 1 &&  item.charge_money != 0}}" class="status">已支付</text>
-                <text wx:if="{{item.charge_money == 0}}" class="status">无需支付</text>
-                <text wx:if="{{item.pay_type == 0}}" style="color:#d81e06" class="status">未支付</text>
+<view class="row">
+    <view class="header_sel">
+        <view class="sel_car">
+            <picker bindchange="car_sel" value="{{index}}" range="{{car_list}}" class="my_sel">
+                <view class="picker">{{car_list[index]}}</view>
+                <image class="car" src="../../img/xiala.png"></image>
+            </picker>
+        </view>
+        <view class="order_kind">
+            <view bindtap='sel_kind' class="all {{status == 2? 'active':''}}" id="2">
+                <view class="text _text">全部</view>
             </view>
-            <view class="main">
-                <view class="up">
-                    <image class="icon" src="../../img/arrive.png"></image>
-                    <text class="starttime">{{item.parkstart_time}}</text>
-                    <text class="time">{{item.buy_time}}</text>
-                </view>
-                <view class="modile">
-                    <image class="icon" src="../../img/leave.png"></image>
-                    <text class="endtime">{{item.parkend_time}}</text>
-                    <text class="money">{{item.charge_money}}元</text>
-                </view>
-                <view class="down">
-                    <image class="icon" src="../../img/site.png"></image>
-                    <text class="parkname">{{item.parking_name}}</text>
-                    <text class="parkno">车位:{{item.park_no}}</text>
-                </view>
+            <view bindtap='sel_kind' class="all {{status == 0? 'active':''}}" id="0">
+                <view class="text  _text">未缴费</view>
+            </view>
+            <view bindtap='sel_kind' class="all {{status == 1? 'active':''}}" id="1">
+                <view class="text">已缴费</view>
             </view>
         </view>
-    </block>
-</scroll-view>
-<view class='img-box' hidden="{{!imgParking}}">
-    <image src='../../img/Recharge-record_icon@2x.png'></image>
-    <text>暂无停车记录哦</text>
+    </view>
+    <scroll-view class="table" scroll-y bindscrolltolower="searchScrollLower">
+        <block wx:for="{{pakingList}}" wx:key="{{index}}">
+            <view class='content' wx:if="{{!imgParking}}">
+                <view class="main">
+                    <view class="park_name">
+                        <image class="icon" src="../../img/site.png"></image>
+                        <text class="parkname">嵊州--{{item.parking_name}}**--{{item.park_no}}**</text>
+                    </view>
+                    <view class="up">
+                        <image class="icon" src="../../img/arrive.png"></image>
+                        <text class="starttime">{{item.parkstart_time}}</text>
+                    </view>
+                    <view class="modile">
+                        <image class="icon" src="../../img/leave.png"></image>
+                        <text class="endtime">{{item.parkend_time}}</text>
+                    </view>
+                    <view class="down">
+                        <image class="icon" src="../../img/time.png"></image>
+                        <text class="time">{{item.buy_time}}</text>
+                        <!-- <image wx:if="{{item.pay_type == 1}}" class="more" src="../../img/more.png"></image> -->
+                        <image wx:if="{{item.pay_type == 0}}" bindtap='to_pay' class="more" src="../../img/more.png" id='{{index}}'></image>
+                    </view>
+                    <view wx:if="{{item.pay_type == 1 &&  item.charge_money != 0}}" class="status">
+                        已支付
+                    </view>
+                    <view wx:if="{{item.charge_money == 0}}" class="status">免费时段</view>
+                    <view wx:if="{{item.pay_type == 0}}" style="color:#d81e06" class="status">
+                        未支付
+                    </view>
+                    <view class="money">{{item.charge_money}}元</view>
+                </view>
+            </view>
+        </block>
+        <view class="loading" hidden="{{!searchLoading ||  imgParking}}">正在载入更多...</view>
+        <view class="loading complete" hidden="{{!searchLoadingComplete ||  imgParking}}">
+            已加载全部
+        </view>
+        <view class='img-box' hidden="{{!imgParking}}">
+            <image src='../../img/Recharge-record_icon@2x.png'></image>
+            <text>暂无记录</text>
+        </view>
+    </scroll-view>
 </view>
+
+
