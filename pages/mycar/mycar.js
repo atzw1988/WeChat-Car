@@ -91,7 +91,7 @@ Page({
                                             success(res) {
                                                 if (res.confirm) {
                                                     wx.redirectTo({
-                                                        url:'../payfor/payfor'
+                                                        url:'../parking/parking'
                                                     })
                                                 } else if (res.cancel) {
                                                 }

@@ -20,6 +20,17 @@ Page({
     onLoad: function (options) {
 
     },
+    onUnload(){
+        wx.removeStorage({
+            key: 'sel_order',
+            success: (result) => {
+                
+            },
+            fail: () => {},
+            complete: () => {}
+        });
+          
+    },
     /**
      * 生命周期函数--监听页面显示
      */
@@ -46,9 +57,7 @@ Page({
         wx.getStorage({
             key: 'mobile',
             success: res => {
-                this.setData({
-                    mobile:res.data
-                })
+                this.data.mobile = res.data
             }
         })
     },
@@ -87,6 +96,7 @@ Page({
                         },
                         method: 'POST',
                         success: function (res) {
+                            console.log(res)
                             wx.requestPayment({
                                 timeStamp: res.data.data.timeStamp,
                                 nonceStr: res.data.data.nonceStr,
@@ -127,9 +137,6 @@ Page({
             wx.getStorage({
                 key: 'mobile',
                 success: function (res) {
-                    that.setData({
-                        mobile: res.data
-                    })
                     wx.request({
                         url: http.reqUrl + '/query/userMoney',
                         data: {

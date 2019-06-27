@@ -72,7 +72,7 @@
                 <text>计费规则:每天8:00-20:00,停放时间不足30分钟(含)免费,停放时间超过30分钟不足1小时(含),按2元/车位标准收取,以后按3元/车位/小时的标准收取,不足1小时的按1小时计;8:00-20:00外免费。</text>
             </view>
         </view>
-        <view class="confirm_btn {{len==6&&carNumber ? 'on' : ''}}" bindtap='sub'>开始停车</view>
+        <view class="confirm_btn {{len==6&&carNumber &&  mycar ? 'on' : ''}}" bindtap='sub'>开始停车</view>
     </view>
     <text> \n </text>
     <text> \n </text>

@@ -16,7 +16,6 @@ Page({
         moneyAll: '0.00',
         token: '',
         mobile:'',
-        mobile:'',
         hiddenmodalput: true,
         token:'',
         paymentType: '2'
@@ -32,14 +31,10 @@ Page({
     },
     onShow(){
         var that = this;
-        // console.log(that)
         wx.getStorage({
             key: 'mobile',
             success(res) {
-                // console.log(res)
-                that.setData({
-                    mobile:res.data+""
-                })
+                that.data.mobile = res.data
                 wx.request({
                     url: http.reqUrl+'/query/userMoney',
                     data: {

@@ -42,6 +42,12 @@ Page({
             }
         })
     },
+    onUnload(){
+        console.log('卸载')
+        wx.removeStorage({
+            key: 'sel_car',
+        });        
+    },
     onShow: function () {            
         wx.showShareMenu({
             withShareTicket: true
@@ -59,18 +65,22 @@ Page({
         wx.getStorage({
             key: 'sel_car',
             success: (res) => {
+                console.log(res)
                 this.setData({
                     carNumber:res.data,
                     mycar:true
                 })
             },
             fail:(res) => {
-                this.get_user_car()
+                // this.get_user_car()
             }
         })
     },
     //获取用户最近所泊车辆
-    get_user_car(){
+    get_user_car(data){
+        let data_list = data.map(item => {
+            return item.car_no
+        })
         wx.getStorage({
             key: 'mobile',
             success: (res) => {
@@ -86,9 +96,15 @@ Page({
                     success: (res) => {
                         console.log(res)
                         if (res.data.code == 0) {
-                            this.setData({
-                                carNumber: res.data.data,
-                            })
+                            if (data_list.indexOf(res.data.data.car_no) != -1) {
+                                this.setData({
+                                    carNumber: res.data.data,
+                                })
+                            }else{
+                                this.setData({
+                                    carNumber:data[0]
+                                })
+                            }
                         }
                     }
                 })
@@ -115,6 +131,8 @@ Page({
                             this.setData({
                                 mycar: true
                             })
+                            let car_list = res.data.data
+                            this.get_user_car(car_list)
                         }else{
                             this.setData({
                                 mycar: false
@@ -131,248 +149,106 @@ Page({
             key: 'to_sel_car',
             data: true,
             success: () => {
-                wx.navigateTo({
+                wx.redirectTo({
                     url: '../selcar/selcar',
                 })
             }
         })
     },
     //提交开车停车
-    sub:function(){                  
-        var that = this
-        var oData = {};
-        var carNumber = this.data.val
-        oData.parkingNo = carNumber;
+    sub:function(){
         wx.getStorage({
             key: 'mobile',
-            success(res) {
-                that.setData({
-                    mobile: res.data
-                })
-                wx.request({
-                    url: http.reqUrl + '/query/parkOrde',
-                    data: {
-                        mobile: that.data.mobile
-                    },
-                    header: {
-                        'content-type': 'application/x-www-form-urlencoded' // 默认值
-                    },
-                    method: 'POST',
-                    success: function (res) {
-                        if (res.data.data != null) {
-                            let length = res.data.data.length
-                            let time = res.data.data
-                            if (time.some(function (time) { return time.pay_type == 0 && time.parkend_time != undefined && time.charge_money > 0 })) {
+            success: (result) => {
+                if (this.data.carNumber.car_no && this.data.parkNo) {
+                    wx.request({
+                        url: http.reqUrl + '/start/parking',
+                        data: {
+                            mobile: result.data,
+                            carNo: this.data.carNumber.car_no,
+                            parkNo: this.data.parkNo
+                        },
+                        header: {
+                            'content-type': 'application/x-www-form-urlencoded'
+                        },
+                        method: 'GET',
+                        success: (res) => {
+                            console.log(res)
+                            if(res.data.code == 0){
+                                wx.redirectTo({ //跳转主页面并刷新
+                                    url: '../index/index',
+                                    success: function (e) {
+                                        var page = getCurrentPages().pop();
+                                        if (page == undefined || page == null) return;
+                                        page.onShow();
+                                    }
+                                })
+                            }else{
                                 wx.showModal({
                                     title: '温馨提示',
-                                    content: '您还有未付清的停车费用，需要付清后才能再次停车',
-                                    success(res) {
-                                        if (res.confirm) {
-                                            wx.navigateTo({
-                                                url: '../payfor/payfor',
-                                            })
-                                        } else if (res.cancel) {
-                                            return;
-                                        }
-                                    }
-                                })
-                            }
-                            if (time.every(function (time) { return time.pay_type == 1 || time.charge_money == 0})) {
-                                wx.getStorage({
-                                    key: 'mobile',
+                                    content: res.data.mesg,
+                                    showCancel: false,
                                     success: function (res) {
-                                        console.log(that.data.carNumber)
-                                        if (that.data.carNumber && that.data.parkNo) {          //判断用户是否需选择车牌和输入车位编号
-                                            wx.request({
-                                                url: http.reqUrl + '/start/parking',
-                                                data: {
-                                                    mobile: res.data,
-                                                    carNo: that.data.carNumber.car_no,
-                                                    parkNo: that.data.parkNo
-                                                },
-                                                header: {
-                                                    'content-type': 'application/x-www-form-urlencoded' // 默认值
-                                                },
-                                                method: 'GET',
-                                                success: function (res) {
-                                                    if (res.data.code == 701) {
-                                                        wx.showModal({
-                                                            title: '温馨提示',
-                                                            content: '所选的车位已经被占用',
-                                                            showCancel: false,
-                                                            success: function (res) {
-                                                                if (res.confirm) {
-                                                                    console.log('用户点击确定')
-                                                                }
-                                                            }
-                                                        });
-                                                        return
-                                                    }
-                                                    if(res.data.code == 702){
-                                                        wx.showModal({
-                                                            title: '温馨提示',
-                                                            content: '输入的车位不存在',
-                                                            showCancel: false,
-                                                            success: function (res) {
-                                                                if (res.confirm) {
-                                                                    console.log('用户点击确定')
-                                                                }
-                                                            }
-                                                        });
-                                                        return
-                                                    }
-                                                    if (res.data.success) {
-                                                        wx.navigateTo({     //跳转主页面并刷新
-                                                            url: '../index/index',
-                                                            success: function (e) {
-                                                                var page = getCurrentPages().pop();
-                                                                if (page == undefined || page == null) return;
-                                                                page.onShow();
-                                                            }
-                                                        })
-                                                    }
-                                                }
-                                            })
-                                        } else if (!that.data.carNumber && that.data.parkNo) {
-                                            wx.showModal({
-                                                title: '温馨提示',
-                                                content: '请选择所泊车辆',
-                                                showCancel: false,
-                                                success: function (res) {
-                                                    if (res.confirm) {
-                                                        console.log('用户点击确定')
-                                                    }
-                                                }
-                                            });
-                                            return
-                                        } else if (that.data.carNumber && !that.data.parkNo) {
-                                            wx.showModal({
-                                                title: '温馨提示',
-                                                content: '请输入车位编号',
-                                                showCancel: false,
-                                                success: function (res) {
-                                                    if (res.confirm) {
-                                                        console.log('用户点击确定')
-                                                    }
-                                                }
-                                            });
-                                            return
-                                        } else {
-                                            wx.showModal({
-                                                title: '温馨提示',
-                                                content: '请添加所泊车辆和车位编号',
-                                                showCancel: false,
-                                                success: function (res) {
-                                                    if (res.confirm) {
-                                                        console.log('用户点击确定')
-                                                    }
-                                                }
-                                            });
-                                            return
+                                        if (res.confirm) {
+                                            console.log('用户点击确定')
                                         }
-                                    },
+                                    }
                                 })
                             }
-                        }else{
-                            wx.getStorage({
-                                key: 'mobile',
-                                success: function (res) {
-                                    console.log(that.data.parkNo)
-                                    if (that.data.carNumber && that.data.parkNo) {          //判断用户是否需选择车牌和输入车位编号
-                                        wx.request({
-                                            url: http.reqUrl + '/start/parking',
-                                            data: {
-                                                mobile: res.data,
-                                                carNo: that.data.sltcarNumber,
-                                                parkNo: that.data.parkNo
-                                            },
-                                            header: {
-                                                'content-type': 'application/x-www-form-urlencoded' // 默认值
-                                            },
-                                            method: 'GET',
-                                            success: function (res) {
-                                                console.log(res)
-                                                if (res.data.code == 701) {
-                                                    wx.showModal({
-                                                        title: '温馨提示',
-                                                        content: '所选的车位已经被占用',
-                                                        showCancel: false,
-                                                        success: function (res) {
-                                                            if (res.confirm) {
-                                                                console.log('用户点击确定')
-                                                            }
-                                                        }
-                                                    });
-                                                    return
-                                                }
-                                                if (res.data.code == 702) {
-                                                    wx.showModal({
-                                                        title: '温馨提示',
-                                                        content: '输入的车位不存在',
-                                                        showCancel: false,
-                                                        success: function (res) {
-                                                            if (res.confirm) {
-                                                                console.log('用户点击确定')
-                                                            }
-                                                        }
-                                                    });
-                                                    return
-                                                }
-                                                if (res.data.success) {
-                                                    wx.navigateTo({     //跳转主页面并刷新
-                                                        url: '../index/index',
-                                                        success: function (e) {
-                                                            var page = getCurrentPages().pop();
-                                                            if (page == undefined || page == null) return;
-                                                            page.onShow();
-                                                        }
-                                                    })
-                                                }
-                                            }
-                                        })
-                                    } else if (!that.data.carNumber && that.data.parkNo) {
-                                        wx.showModal({
-                                            title: '温馨提示',
-                                            content: '请添加所泊车辆',
-                                            showCancel: false,
-                                            success: function (res) {
-                                                if (res.confirm) {
-                                                    console.log('用户点击确定')
-                                                }
-                                            }
-                                        });
-                                        return
-                                    } else if (that.data.carNumber && !that.data.parkNo) {
-                                        wx.showModal({
-                                            title: '温馨提示',
-                                            content: '请输入车位编号',
-                                            showCancel: false,
-                                            success: function (res) {
-                                                if (res.confirm) {
-                                                    console.log('用户点击确定')
-                                                }
-                                            }
-                                        });
-                                        return
-                                    } else {
-                                        wx.showModal({
-                                            title: '温馨提示',
-                                            content: '请添加所泊车辆和车位编号',
-                                            showCancel: false,
-                                            success: function (res) {
-                                                if (res.confirm) {
-                                                    console.log('用户点击确定')
-                                                }
-                                            }
-                                        });
-                                        return
-                                    }
-                                },
-                            })
+                        }
+                    })        
+                } else if (!this.data.carNumber.car_no && this.data.parkNo) {
+                    wx.showModal({
+                        title: '温馨提示',
+                        content: '请选择所泊车辆',
+                        showCancel: false,
+                        success: function (res) {
+                            if (res.confirm) {
+                                console.log('用户点击确定')
+                            }
+                        }
+                    })
+                    return
+                } else if (this.data.carNumber.car_no && !this.data.parkNo) {
+                    wx.showModal({
+                        title: '温馨提示',
+                        content: '请输入车位编号',
+                        showCancel: false,
+                        success: function (res) {
+                            if (res.confirm) {
+                                console.log('用户点击确定')
+                            }
+                        }
+                    })
+                    return
+                }else{
+                    wx.showModal({
+                        title: '温馨提示',
+                        content: '请选择所泊车辆和车位编号',
+                        showCancel: false,
+                        success: function (res) {
+                            if (res.confirm) {
+                                console.log('用户点击确定')
+                            }
+                        }
+                    })
+                    return
+                }
+            },
+            fail: () => {
+                wx.showModal({
+                    title: '温馨提示',
+                    content: '获取用户信息出错，请重新进入小程序',
+                    showCancel: false,
+                    success: function (res) {
+                        if (res.confirm) {
+                            console.log('用户点击确定')
                         }
                     }
                 })
-            }
+                return
+            },
+            complete: () => {}
         })        
     },
     //二维码识别车位编号

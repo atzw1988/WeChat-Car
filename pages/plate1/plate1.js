@@ -70,8 +70,8 @@ Page({
                                     if (prob>0.8){            //判断识别车牌的可信度
                                         that.setData({
                                             carnumber: res.data.plates[0].txt.split(""),
-                                            plateNo: res.data.plates[0].txt
                                         })
+                                        that.data.plateNo = res.data.plates[0].txt
                                         if (that.data.carkind == 0) {
                                             that.data.inputBoxData[0].char = that.data.carnumber[0]
                                             that.data.inputBoxData[1].char = that.data.carnumber[1]
@@ -139,8 +139,8 @@ Page({
         var oString = oArr.join("")
         this.setData({
             plateLength: true,
-            plateNo: oString
         })
+        this.data.plateNo = oString
         }else{
             this.setData({
                 plateLength: false,
@@ -170,9 +170,9 @@ Page({
             }
             var oString = oArr.join("")
             this.setData({
-                plateLength: true,
-                plateNo: oString
+                plateLength: true
             })
+            this.data.plateNo = oString
         } else {
             this.setData({
                 plateLength: false,
@@ -235,15 +235,19 @@ Page({
     //确认添加车牌函数
     plateOn: function(){  
         var that = this;
-        if (!this.data.plateNo){
+        console.log(this.data.plateNo.length)
+        if (this.data.plateNo.length < 7){
+            wx.showModal({
+                title: '温馨提示',
+                content: '车牌位数输入错误!',
+                showCancel:false
+            })
             return;
         }else{
             wx.getStorage({
                 key: 'mobile',
                 success(res) {
-                    that.setData({
-                        mobile: res.data + ""
-                    })
+                    that.data.mobile = res.data
                     wx.request({
                         url: http.reqUrl +'/add/carNo',
                         data: {
@@ -263,7 +267,7 @@ Page({
                                     success: function (e) {
                                         var page = getCurrentPages().pop();
                                         if (page == undefined || page == null) return;
-                                        page.onLoad();
+                                        // page.onShow();
                                         wx.showToast({
                                             title: '添加成功!',
                                             image: '../../img/chenggong.png'

@@ -42,10 +42,7 @@ Page({
         wx.getStorage({
             key: 'mobile',
             success(res) {
-                // console.log(res)
-                that.setData({
-                    mobile: res.data + ""
-                })
+                that.data.mobile = res.data
                 wx.request({
                     url: http.reqUrl +'/query/Recharge',
                     data: {
@@ -60,11 +57,12 @@ Page({
                         if (res.data.data != null && res.data.success){
                             let bill = res.data.data
                             bill.forEach(item => {
-                                item.jin_e = (item.jin_e / 100).toFixed(2)
+                                // item.jin_e = (item.jin_e * 1).toFixed(2)
+                                item.pay_date = http.formatDatenew(item.pay_date)
                             })
-                            for (var i = 0; i < bill.length; i++) {
-                                bill[i].pay_date = http.formatDatenew((bill[i].pay_date - 0))
-                            }
+                            // for (var i = 0; i < bill.length; i++) {
+                            //     bill[i].pay_date = http.formatDatenew((bill[i].pay_date - 0))
+                            // }
                             that.setData({
                                 queryList: res.data.data
                             })
@@ -112,10 +110,7 @@ Page({
         wx.getStorage({
             key: 'mobile',
             success(res) {
-                console.log(res)
-                that.setData({
-                    mobile: res.data + ""
-                })
+                that.data.mobile = res.data
                 wx.request({
                     url: http.reqUrl +'/query/Recharge',
                     data: {

@@ -46,14 +46,18 @@ Page({
                 var oLat = res.result.location.lat;
                 var oLng = res.result.location.lng;
                 that.setData({
-                oLat: res.result.location.lat,
-                oLng: res.result.location.lng,
-                searchPageNum: 1,   //第一次加载，设置1  
+                // oLat: res.result.location.lat,
+                // oLng: res.result.location.lng,
+                // searchPageNum: 1,   //第一次加载，设置1  
                 searchSongList: [],  //放置返回数据的数组,设为空  
-                isFromSearch: true,  //第一次加载，设置true  
+                // isFromSearch: true,  //第一次加载，设置true  
                 searchLoading: true,  //把"上拉加载"的变量设为true，显示  
                 searchLoadingComplete: false //把“没有数据”设为false，隐藏  
                 });
+                that.data.oLat = res.result.location.lat
+                that.data.oLng = res.result.location.lng
+                that.data.searchPageNum = 1
+                that.data.isFromSearch = true
                 that.fetchSearchList();
             }
             });
@@ -91,9 +95,10 @@ Page({
             searchList = res.data.map
             that.data.searchSongList.concat(searchList);
             that.setData({
-                itemPage: res.data.tp,
+                // itemPage: res.data.tp,
                 searchSongList: that.data.searchSongList.concat(searchList) //获取数据数组  
             });
+            that.data.itemPage = res.data.tp
             if (res.data.tp == 1) {
                 that.setData({
                 searchLoadingComplete: true, //把“没有数据”设为true，显示  

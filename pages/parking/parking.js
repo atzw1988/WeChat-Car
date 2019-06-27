@@ -72,9 +72,7 @@ Page({
     wx.getStorage({
       key: 'mobile',
       success: (res) => {
-        this.setData({
-          mobile:res.data
-        })
+        this.data.mobile = res.data
         wx.request({
           url: http.reqUrl + '/query/carNo',
           data: {
@@ -85,6 +83,7 @@ Page({
           },
           method: 'GET',
           success: (res) => {
+            console.log(res)
             if (res.data.success) {
               let car_list = res.data.data.map(item => {
                 return item.car_no
@@ -96,19 +95,20 @@ Page({
                   let num = car_list.indexOf(res.data)
                   this.setData({
                     car_list: car_list,
-                    my_car:res.data,
                     index:num
                   })
+                  this.data.my_car = res.data
                 },
                 fail: () => {
                   this.setData({
                     car_list: car_list,
-                    my_car: car_list[0]
                   })
+                  this.data.my_car = car_list[0]
                 },
-                complete: () => {}
+                complete: () => {
+                  this.get_order_list()
+                }
               })
-              this.get_order_list()
             } else {
               this.setData({
                 imgParking: true
@@ -144,6 +144,7 @@ Page({
       },
       method: 'POST',
       success: res => {
+        console.log(res)
         if(res.data.code == 0){
           if (res.data.data.tp > res.data.data.pc) {
             this.setData({

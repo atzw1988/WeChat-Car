@@ -66,53 +66,57 @@ Page({
     },
     onUnload: function(){
     },  
-    onShow: function(){
-        if (app.globalData.mobile != null) {
-            this.setData({
-                phone_num: false,
-                mobile: app.globalData.mobile
-            })
-            this.carno_bind()
-            this.uesr_nopay()
-            this.stop_car()
-        } else {
-            let num = app.globalData.mobile
-            app.employIdCallback = num => {
-                if (num == null) {
+    onShow(){
+        wx.getStorage({
+            key: 'mobile',
+            success: (result) => {
+                console.log(result)
+                if (result.data != null){
+                    this.data.mobile = result.data
                     this.setData({
-                        phone_num: true
-                    })
-                } else {
-                    this.setData({
-                        phone_num: false,
-                        mobile: num,
+                        phone_num: false
                     })
                     this.carno_bind()
                     this.uesr_nopay()
                     this.stop_car()
                 }
-            }
-        }
+            },
+            fail: () => {
+                this.check_phone()
+            },
+            complete: () => {}
+        })
+        wx.getUserInfo({
+            withCredentials: 'false',
+            lang: 'zh_CN',
+            timeout:10000,
+            success: (result) => {
+                console.log(res)
+            },
+            fail: () => {},
+            complete: () => {}
+        });
+          
         let that = this
         // 转发
         wx.showShareMenu({
             withShareTicket: true
         });        
-        app.getUserInfo(function (userInfo) {
-            that.setData({
-                userInfo: userInfo
-            })
-        });
+        // app.getUserInfo(function (userInfo) {
+        //     // that.setData({
+        //     //     userInfo: userInfo
+        //     // })
+        // });
         wx.getSystemInfo({
             success: function (res) {
                 if (that.data.parkShow) {
                     that.setData({
-                        winWidth: res.windowWidth,
+                        // winWidth: res.windowWidth,
                         winHeight: res.windowHeight-180
                     });
                 } else {
                     that.setData({
-                        winWidth: res.windowWidth,
+                        // winWidth: res.windowWidth,
                         winHeight: res.windowHeight - 120
                     });
                 }
@@ -122,12 +126,12 @@ Page({
             success: function (res) {
                 if (that.data.choose) {
                     that.setData({
-                        winWidth: res.windowWidth,
+                        // winWidth: res.windowWidth,
                         winHeight: res.windowHeight-180
                     });
                 } else {
                     that.setData({
-                        winWidth: res.windowWidth,
+                        // winWidth: res.windowWidth,
                         winHeight: res.windowHeight - 120
                     });
                 }
@@ -138,6 +142,8 @@ Page({
             success: function (res) {
                 var latitude = res.latitude;
                 var longitude = res.longitude;
+                // var latitude = '29.578269'
+                // var longitude = '120.805351'
                 // 实例化API核心类
                 var demo = new QQMapWX({
                     key: 'XKBBZ-5RKWS-4TQOB-6CMPO-U2ORF-V5BKW' // 必填
@@ -210,6 +216,35 @@ Page({
                 });
             }
         });        
+    },
+    //判断是否获取到手机号
+    check_phone(){
+        if (app.globalData.mobile != null || this.data.mobile ) {
+            this.setData({
+                phone_num: false,
+            })
+            this.data.mobile = app.globalData.mobile
+            this.carno_bind()
+            this.uesr_nopay()
+            this.stop_car()
+        } else {
+            let num = app.globalData.mobile
+            app.employIdCallback = num => {
+                if (num == null) {
+                    this.setData({
+                        phone_num: true
+                    })
+                } else {
+                    this.setData({
+                        phone_num: false,
+                    })
+                    this.data.mobile = num
+                    this.carno_bind()
+                    this.uesr_nopay()
+                    this.stop_car()
+                }
+            }
+        }
     },
     //查询是否有绑定车牌
     carno_bind(){
@@ -285,12 +320,12 @@ Page({
                     success: function (res) {
                         if (that.data.parkShow) {
                             that.setData({
-                                winWidth: res.windowWidth,
+                                // winWidth: res.windowWidth,
                                 winHeight: res.windowHeight - 180
                             });
                         } else {
                             that.setData({
-                                winWidth: res.windowWidth,
+                                // winWidth: res.windowWidth,
                                 winHeight: res.windowHeight - 120
                             });
                         }
@@ -301,79 +336,69 @@ Page({
     },
     //查询用户是否有欠款
     uesr_nopay(){
-        let that = this
-        wx.getStorage({
-            key: 'mobile',
-            success:(res) => {
-                that.setData({
-                    mobile: res.data
-                })
-                wx.request({
-                    url: http.reqUrl + '/carNo/order',
-                    data: {
-                        mobile: that.data.mobile,
-                        pageIndex: 1,
-                        ps: 10,
-                        status: '0',
-                    },
-                    header: {
-                        'content-type': 'application/x-www-form-urlencoded' // 默认值
-                    },
-                    method: 'POST',
-                    success: (res) => {
-                        if(res.data.code == 0){
-                            let car = res.data.data.data.map(item => {
-                                return item.car_no
-                            }).join(',')
-                            this.setData({
-                                nopay: true,
-                                car:car
-                            })
-                            wx.setStorage({
-                                key: 'nopay_car',
-                                data: res.data.data.data[0].car_no,
-                                success: () => {
-                                    wx.showModal({
-                                        title: '温馨提示',
-                                        content: '您车牌:' + car + '下还有未付清的停车费用，需要付清后才能再次停车',
-                                        success(res) {
-                                            if (res.confirm) {
-                                                wx.setStorage({
-                                                    key: 'index_to_pay',
-                                                    data: true,
-                                                    success: () => {
-                                                        wx.navigateTo({
-                                                            url: '../parking/parking',
-                                                        })
-                                                    },
-                                                    fail: () => {},
-                                                    complete: () => {}
+        wx.request({
+            url: http.reqUrl + '/carNo/order',
+            data: {
+                mobile: this.data.mobile,
+                pageIndex: 1,
+                ps: 10,
+                status: '0',
+            },
+            header: {
+                'content-type': 'application/x-www-form-urlencoded' // 默认值
+            },
+            method: 'POST',
+            success: (res) => {
+                console.log(res)
+                if (res.data.code == 0) {
+                    let car = Array.from(new Set(res.data.data.data.map(item => {
+                        return item.car_no
+                    }))).join(',')
+                    this.data.nopay = true
+                    this.data.car = car
+                    wx.setStorage({
+                        key: 'nopay_car',
+                        data: res.data.data.data[0].car_no,
+                        success: () => {
+                            wx.showModal({
+                                title: '温馨提示',
+                                content: '您车牌:' + car + '下还有未付清的停车费用，需要付清后才能再次停车',
+                                success(res) {
+                                    if (res.confirm) {
+                                        wx.setStorage({
+                                            key: 'index_to_pay',
+                                            data: true,
+                                            success: () => {
+                                                wx.navigateTo({
+                                                    url: '../parking/parking',
                                                 })
-                                            } else if (res.cancel) {
-                                                return;
-                                            }
-                                        }
-                                    })
-                                },
-                                fail: () => {},
-                                complete: () => {}
-                            })                           
-                        }else{
-                            this.setData({
-                                nopay:false
+                                            },
+                                            fail: () => { },
+                                            complete: () => { }
+                                        })
+                                    } else if (res.cancel) {
+                                        return;
+                                    }
+                                }
                             })
-                        }
-                    }
-                })    
+                        },
+                        fail: () => { },
+                        complete: () => { }
+                    })
+                } else {
+                    this.setData({
+                        nopay: false
+                    })
+                }
             }
         })
     },
     getUserInfo: function (e) {
         app.globalData.userInfo = e.detail.userInfo
-        this.setData({
-            userInfo: e.detail.userInfo,
-            hasUserInfo: true
-        })
+        // this.setData({
+        //     userInfo: e.detail.userInfo,
+        //     hasUserInfo: true
+        // })
     },
     // 监听markers
     markertap(e) {
@@ -596,7 +621,9 @@ Page({
                                                             key: 'mobile',
                                                             data: res.data.data.mobile,
                                                             success: () => {
-                                                                that.stopCar()
+                                                                // that.stopCar()
+                                                                that.onShow()
+                                                                // that.carno_bind()
                                                             }
                                                         })
                                                     }
@@ -622,7 +649,21 @@ Page({
     },
     //点击选择停车种类
     stopCar: function(){
-        this.parkone()
+        // this.parkone()
+        wx.navigateTo({
+            url: '../parking/parking',
+        })      
+        // wx.showModal({
+        //     title: '温馨提示',
+        //     content: '尊敬的车主，因系统维护APP/小程序暂停主动停车功能，将由现场管理人员录入停车订单，您驶离车位后可在APP/小程序上付款，或找现场管理人员支付。',
+        //     showCancel: false,
+        //     success: function (res) {
+        //         if (res.confirm) {
+        //             console.log('用户点击确定')
+        //         }
+        //     }
+        // })
+        // return
         // var that = this;
         // this.setData({
         //     showModalStatus: true
@@ -657,61 +698,6 @@ Page({
                  url: '../carNumber/carNumber',
              })
         }
-        // wx.getStorage({
-        //     key: 'mobile',
-        //     success(res) {
-        //         that.setData({
-        //             mobile: res.data
-        //         })
-        //         wx.request({
-        //             url: http.reqUrl + '/query/parkOrde',
-        //             data: {
-        //                 mobile: that.data.mobile
-        //             },
-        //             header: {
-        //                 'content-type': 'application/x-www-form-urlencoded' // 默认值
-        //             },
-        //             method: 'POST',
-        //             success: function (res) {
-        //                 if(res.data.success){
-        //                     if (res.data.data != null) {
-        //                         let length = res.data.data.length
-        //                         let time = res.data.data
-        //                         if (time.some(function (time) { return time.pay_type == 0 && time.parkend_time != undefined && time.charge_money > 0 })) {
-        //                             wx.showModal({
-        //                                 title: '温馨提示',
-        //                                 content: '您还有未付清的停车费用，需要付清后才能再次停车',
-        //                                 success(res) {
-        //                                     if (res.confirm) {
-        //                                         wx.navigateTo({
-        //                                             url: '../payfor/payfor',
-        //                                         })
-        //                                     } else if (res.cancel) {
-        //                                         return;
-        //                                     }
-        //                                 }
-        //                             })
-        //                         }
-        //                         if (time.every(function (time) { return time.pay_type == 1 || time.charge_money == 0 })) {
-        //                             wx.navigateTo({
-        //                                 url: '../carNumber/carNumber',
-        //                             })
-        //                         }
-        //                     } else {
-        //                         wx.navigateTo({
-        //                             url: '../carNumber/carNumber',
-        //                         })
-        //                     }  
-        //                 }
-        //                 if(res.data.fail){
-        //                     wx.navigateTo({
-        //                         url: '../carNumber/carNumber',
-        //                     })
-        //                 }                         
-        //             }
-        //         })
-        //     }
-        // })   
     },
     parktwo: function(){
         wx.navigateTo({

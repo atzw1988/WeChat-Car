@@ -3,16 +3,16 @@
         <!-- 停车 -->
         <view class="{{swichNav?'show':'hidden'}}">
             <view class="map_container">
-                <map id="map" scale="12" longitude="{{longitude}}" latitude="{{latitude}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindtap="click" bindmarkertap="markertap" bindcallouttap="callouttap" show-location style="width: 100%;height:{{winHeight}}px">
+                <map id="map" scale="12" longitude="{{longitude}}" latitude="{{latitude}}" bindcontroltap="controltap" markers="{{markers}}" bindtap="click" bindmarkertap="markertap" bindcallouttap="callouttap" show-location style="width: 100%;height:{{winHeight}}px">
                     
                         <cover-image class="refresh_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="refreshtap" src="../../img/refresh_ico.png"></cover-image>
                         <cover-image class="center_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="moveToLocation" src="../../img/center_ico.png"></cover-image>
                         <cover-image class="help_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}" bindtap="helpTocenter" src="../../img/help_ico.png"></cover-image>
-                        <cover-image class="personal_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}||{{phone_num?'hidden':'show'}}" bindtap="personalTocenter" src="../../img/personal_ico.png"></cover-image>
-                        <cover-view class="parking-btn {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}||{{phone_num?'hidden':'show'}}" bindtap="stopCar" animation="{{animationData1}}">我要停车/缴费  
+                        <cover-image class="personal_ico {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}||{{phone_num?'hidden':'show'}}" bindtap="personalTocenter" src="../../img/personal_ico.png"></cover-image>                     
+                        <cover-view class="parking-btn {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}||{{phone_num?'hidden':'show'}}" bindtap="stopCar" animation="{{animationData1}}">缴费  
                         </cover-view>                            
                         <cover-view class="parking-btn {{parkShow?'hidden':'show'}}||{{choose?'hidden':'show'}}||{{phone_num?'show':'hidden'}}" animation="{{animationData1}}">
-                            <button class='phone_btn' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">我要停车/缴费</button>
+                            <button class='phone_btn' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">缴费</button>
                         </cover-view>                            
                 </map>
                     <view class="{{parkShow?'show':'hidden'}} user_box">

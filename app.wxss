@@ -1,19 +1,15 @@
-/**app.wxss**/
 .container {
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  /* padding: 200rpx 0; */
   box-sizing: border-box;
 } 
 .flt {float:left;}
 .frt {float:right;}
 .clearfix:before, .clearfix:after { display: table; line-height: 0; content: "";}
 .clearfix:after { clear: both;}
-
-/**app.wxss**/
 
 page {
   width: 100%;
@@ -25,9 +21,7 @@ page {
   height: 100%;
   display: flex;
   flex-direction: column;
-  /*align-items: center;*//*justify-content: space-between;*/
   padding: 100rpx 0;
-  /*box-sizing: border-box;*/
 }
 
 .fl {
@@ -75,8 +69,6 @@ page {
   flex-direction: row;
 }
 
-/* 表单输入 */
-
 .section {
   background-color: white;
   display: flex;
@@ -86,8 +78,6 @@ page {
   padding: 10px 10rpx;
   border-bottom: 1px solid #ddd;
 }
-
-
 
 .section_title {
   flex: 0 0 30%;
@@ -127,7 +117,6 @@ page {
   font-size: 12px;
 }
 
-/* 提示弹窗 */
 
 .link {
   margin-top: 15rpx;
@@ -188,21 +177,6 @@ page {
   margin: 20rpx 10rpx;
 }
 
-/* 表单信息列表 */
-
-/* .title {
-  font-size: 16px;
-  color: #3594e9;
-  margin: 30rpx 0 20rpx;
-  padding: 0 20rpx;
-} */
-
-/*.container {
-  background: #fff;
-  padding: 15rpx 10rpx;
-  overflow: hidden;
-}*/
-
 .infobar {
   display: flex;
   flex-direction: row;
@@ -222,7 +196,6 @@ page {
   flex: 1;
 }
 
-/*more*/
 
 .flex {
   display: flex;
@@ -403,12 +376,10 @@ page {
 .x-sidebar {
   position: relative;
   z-index: 99;
-  /* padding: 0 15rpx; */
   border-right: 1px lightgray solid;
   width: 1px;
 }
 
-/*分割线*/
 
 .line {
   height: 1px;
@@ -422,7 +393,6 @@ page {
   text-align: center;
 }
 
-/*底部按钮*/
 
 .bottom-btn-group {
   position: fixed;
@@ -499,7 +469,6 @@ page {
   box-shadow: 0rpx 2rpx 5px #888;
 }
 
-/*加载动画*/
 
 .spinner {
   width: 60px;
@@ -550,7 +519,6 @@ page {
   }
 }
 
-/* success page*/
 
 .success_container {
   text-align: center;
@@ -873,4 +841,4 @@ page {
 .sa-icon.sa-success.animate::after {
   -webkit-animation: rotatePlaceholder 4.25s ease-in;
   animation: rotatePlaceholder 4.25s ease-in;
-}
+} 

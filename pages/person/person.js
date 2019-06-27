@@ -38,47 +38,10 @@ Page({
         })
     },
     onShow: function () {
-        wx.showLoading({
-            title: '加载中',
-        })
-        this.get_order_num()
-    },
-    //获取用户停车次数
-    get_order_num(){
-        wx.getStorage({
-            key: 'mobile',
-            success: (res) => {
-                this.setData({
-                    mobile: res.data
-                })
-                wx.request({
-                    url: http.reqUrl + '/carNo/order',
-                    data: {
-                        mobile: this.data.mobile,
-                        pageIndex: 1,
-                        ps: 10,
-                        status: '2',
-                    },
-                    header: {
-                        'content-type': 'application/x-www-form-urlencoded' // 默认值
-                    },
-                    method: 'POST',
-                    success: (res) => {
-                        console.log(res)
-                        if (res.data.code == 0) {
-                            this.setData({
-                                parkNum: res.data.data.tr
-                            })
-                        }else{
-                            this.setData({
-                                parkNum: 0
-                            })
-                        }
-                        wx.hideLoading()
-                    }
-                })
-            }
-        })
+        // wx.showLoading({
+        //     title: '加载中',
+        // })
+        // this.get_order_num()
     },
     bindGetUserInfo(e) {
         console.log(e.detail.userInfo)

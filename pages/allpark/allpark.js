@@ -65,13 +65,13 @@ Page({
                     },
                     success: function (res) {
                         // console.log(res)
-                        var oLat = res.result.location.lat;
-                        var oLng = res.result.location.lng;
+                        // var oLat = res.result.location.lat;
+                        // var oLng = res.result.location.lng;
                         that.setData({
-                            searchSongList: [],
-                            oLat: res.result.location.lat,
-                            oLng: res.result.location.lng,
+                            searchSongList: []
                         })
+                        that.data.oLat = res.result.location.lat
+                        that.data.oLng = res.result.location.lng
                         // 获取当前区域
                         oAddress = res.result.address_component.district;
                         app.func.req('/parking/parkInfo', {address: oAddress}, function (res) {
