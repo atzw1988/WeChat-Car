@@ -87,7 +87,7 @@ Page({
                         data: {
                             mobile: this.data.mobile,
                             order_no: this.data.sel_order.order_no,
-                            amount: this.data.sel_order.charge_money,
+                            amount: this.data.sel_order.charge_money - this.data.sel_order.pay_cost,
                             paymentType: this.data.paymentType
                         },
                         header: {
@@ -153,7 +153,7 @@ Page({
                                     url: http.reqUrl + '/balance/pay',
                                     data: {
                                         mobile: that.data.mobile,
-                                        userMoney: that.data.sel_order.charge_money,
+                                        userMoney: that.data.sel_order.charge_money - that.data.sel_order.pay_cost,
                                         orderNo: that.data.sel_order.order_no
                                     },
                                     header: {
@@ -200,7 +200,7 @@ Page({
                                                         data: {
                                                             mobile: that.data.mobile,
                                                             order_no: that.data.sel_order.order_no,
-                                                            amount: that.data.sel_order.charge_money,
+                                                            amount: that.data.sel_order.charge_money - that.data.sel_order.pay_cost,
                                                             paymentType: that.data.paymentType
                                                         },
                                                         header: {

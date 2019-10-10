@@ -24,7 +24,7 @@
   background: #5cbcfe;
 }
 .my_sel{
-  width: 180rpx;
+  width: 200rpx;
   height: 60rpx;
   line-height: 40rpx;
   text-align: center;
@@ -106,6 +106,10 @@
   float: left;
   margin-right: 10rpx;
   margin-top: 10rpx;
+}
+.topay_text{
+  float: right;
+  color: #5cbcfe;
 }
 .more{
   width: 40rpx;

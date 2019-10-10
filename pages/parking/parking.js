@@ -214,13 +214,14 @@ Page({
   },
   //跳转支付
   to_pay(e){
+    // console.log(params)
     let num = e.currentTarget.id
     let order = this.data.pakingList[num]
     wx.setStorage({
       key: 'sel_order',
       data: order,
       success: () => {
-        wx.redirectTo({
+        wx.navigateTo({
           url: '../orderpay/orderpay',
           success: (result) => {
             

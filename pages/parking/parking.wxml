@@ -20,11 +20,11 @@
     </view>
     <scroll-view class="table" scroll-y bindscrolltolower="searchScrollLower">
         <block wx:for="{{pakingList}}" wx:key="{{index}}">
-            <view class='content' wx:if="{{!imgParking}}">
+            <view class='content' wx:if="{{!imgParking &&  item.pay_type == 1}}">
                 <view class="main">
                     <view class="park_name">
                         <image class="icon" src="../../img/site.png"></image>
-                        <text class="parkname">嵊州--{{item.parking_name}}**--{{item.park_no}}**</text>
+                        嵊州--{{item.parking_name}}**--{{item.park_no}}**
                     </view>
                     <view class="up">
                         <image class="icon" src="../../img/arrive.png"></image>
@@ -38,16 +38,42 @@
                         <image class="icon" src="../../img/time.png"></image>
                         <text class="time">{{item.buy_time}}</text>
                         <!-- <image wx:if="{{item.pay_type == 1}}" class="more" src="../../img/more.png"></image> -->
-                        <image wx:if="{{item.pay_type == 0}}" bindtap='to_pay' class="more" src="../../img/more.png" id='{{index}}'></image>
                     </view>
-                    <view wx:if="{{item.pay_type == 1 &&  item.charge_money != 0}}" class="status">
+                    <view wx:if="{{item.charge_money != 0}}" class="status">
                         已支付
                     </view>
                     <view wx:if="{{item.charge_money == 0}}" class="status">免费时段</view>
+                    <view class="money">{{item.charge_money - item.pay_cost}}元</view>
+                </view>
+            </view>
+            <view class='content' wx:if="{{!imgParking &&  item.pay_type == 0}}">
+                <view class="main"  bindtap='to_pay'  id='{{index}}'>
+                    <view class="park_name">
+                        <image class="icon" src="../../img/site.png"></image>
+                        <!-- <text class="parkname">
+                            嵊州--{{item.parking_name}}**--{{item.park_no}}**
+                        </text> -->
+                        嵊州--{{item.parking_name}}**--{{item.park_no}}**
+                    </view>
+                    <view class="up">
+                        <image class="icon" src="../../img/arrive.png"></image>
+                        <text class="starttime">{{item.parkstart_time}}</text>
+                    </view>
+                    <view class="modile">
+                        <image class="icon" src="../../img/leave.png"></image>
+                        <text class="endtime">{{item.parkend_time}}</text>
+                    </view>
+                    <view class="down">
+                        <image class="icon" src="../../img/time.png"></image>
+                        <text class="time">{{item.buy_time}}</text>
+                        <!-- <image wx:if="{{item.pay_type == 1}}" class="more" src="../../img/more.png"></image> -->
+                        <!-- <image class="more" src="../../img/more.png"></image> -->
+                        <text class="topay_text">支付>></text>
+                    </view>
                     <view wx:if="{{item.pay_type == 0}}" style="color:#d81e06" class="status">
                         未支付
                     </view>
-                    <view class="money">{{item.charge_money}}元</view>
+                    <view class="money">{{item.charge_money - item.pay_cost}}元</view>
                 </view>
             </view>
         </block>

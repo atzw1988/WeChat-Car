@@ -1,11 +1,14 @@
-var rootDocment = 'https://www.lcgxlm.com/its/wechat';
-// var rootDocment = 'http://192.168.1.104:13259/its/wechat';
-var rootDocment1 = 'https://www.lcgxlm.com/its/wechat';
-// var rootDocment1 = 'http://192.168.1.104:13259/its/wechat';
+var rootDocment = 'https://www.lcgxlm.com/its/wechat';    //线上接口
+// var rootDocment = 'http://192.168.1.104:13259/its/wechat';  //本地接口
+// var rootDocment = 'http://112.33.13.149:13260/its/wechat';  //测试环境接口
+var rootDocment1 = 'https://www.lcgxlm.com/its/wechat';      //线上接口
+// var rootDocment1 = 'http://192.168.1.104:13259/its/wechat';    //本地接口
+// var rootDocment1 = 'http://112.33.13.149:13260/its/wechat';    //测试环境接口
 function req(url, data, cb) {
     wx.request({
-        url: 'https://www.lcgxlm.com/its/wechat' + url,
-        // url: 'http://192.168.1.104:13259/its/wechat' + url,
+        url: 'https://www.lcgxlm.com/its/wechat' + url,    //线上接口
+        // url: 'http://192.168.1.104:13259/its/wechat' + url,    //本地接口
+        // url: 'http://112.33.13.149:13260/its/wechat' + url,    //测试环境接口
         data: data,
         // method: 'POST',
         header: { 'content-type': 'application/json'},

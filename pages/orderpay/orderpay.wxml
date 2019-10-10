@@ -16,6 +16,10 @@
           <view class="left">停车费用:</view>
           <view style="color:#d81e06" class="right">{{sel_order.charge_money}}元</view>
         </view>
+        <view class="money" wx:if="{{sel_order.pay_cost > 0}}">
+          <view class="left">已付费用:</view>
+          <view style="color:#d81e06" class="right">{{sel_order.pay_cost}}元</view>
+        </view>
         <view class="start_time" wx:if="{{show_detail}}">
           <view class="left">驶入时间:</view>
           <view class="right">{{sel_order.parkstart_time}}</view>
